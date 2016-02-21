@@ -5325,9 +5325,7 @@
 	});
 	exports.registerComponent = registerComponent;
 	exports.createEl = createEl;
-	function registerComponent(elementName, templateId) {
-	  var shadowHost = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
-
+	function registerComponent(elementName, templateId, shadowHost) {
 	  var CustomElement = document.registerElement(elementName);
 	  var link = document.querySelector('link[rel="import"]' + templateId + '-comp');
 	  var template = link.import.querySelector(templateId).innerHTML;
@@ -5389,12 +5387,35 @@
 	      },
 	      setClass: {
 	        value: function value() {
-	          for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-	            args[_key2] = arguments[_key2];
-	          }
+	          var _el$classList;
 
-	          el.className = [].concat(args);
+	          (_el$classList = el.classList).add.apply(_el$classList, arguments);
 	          return el;
+	        }
+	      },
+	      removeClass: {
+	        value: function value() {
+	          var _el$classList2;
+
+	          (_el$classList2 = el.classList).remove.apply(_el$classList2, arguments);
+	        }
+	      },
+	      toggleClass: {
+	        value: function value(className) {
+	          el.classList.toggle(className);
+	        }
+	      },
+	      flashClass: {
+	        value: function value(className) {
+	          var duration = arguments.length <= 1 || arguments[1] === undefined ? 200 : arguments[1];
+
+	          el.classList.toggle(className);
+
+	          var t = setTimeout(function () {
+	            el.classList.toggle(className);
+	          }, duration);
+
+	          clearTimeout(t);
 	        }
 	      },
 	      setId: {
@@ -5952,14 +5973,41 @@
 
 	var _elements = __webpack_require__(192);
 
+	var _basicTile = __webpack_require__(194);
+
 	_elements.x.attach(_elements.x.div.append(_elements.x.h1.text('Foo!').subscribe('c', function (e) {
 	  this.text(e.detail.data);
 	}), _elements.x.ul.append(_elements.x.li.append(_elements.x.p.text('item1')), _elements.x.li.append(_elements.x.p.text('item2').click(function (el) {
 	  return el.publish('c', 'Bar!');
-	})), _elements.x.li.append(_elements.x.p.text('item3')))));
+	})), _elements.x.li.append(_elements.x.p.text('item3')), _elements.x.li.append(_basicTile.tile))));
 
 	// registerComponent('my-list', '#list', '#mydiv').subscribe('alertfired', function(e){ this.innerHTML = '<ul><li>Fifth Thing</li><li>Fourth Thing</li><li>Third Thing</li><li>Second Thing</li><li>First Thing</li></ul>'; });
 	// registerComponent('my-alert', '#alert', '#my-alert').click(el => el.publish('alertfired'));
+
+/***/ },
+/* 194 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.tile = undefined;
+
+	var _dum = __webpack_require__(191);
+
+	var _elements = __webpack_require__(192);
+
+	var outerDiv = _elements.x.div.setClass('tile-outer').click(function (el) {
+	  el.flashClass('highlighted');
+	});
+
+	var innerDiv = _elements.x.div.setClass('tile-inner');
+
+	var title = _elements.x.h1.text('Tile 1');
+
+	var tile = exports.tile = outerDiv.append(innerDiv.append(title));
 
 /***/ }
 /******/ ]);

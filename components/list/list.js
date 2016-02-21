@@ -77,13 +77,12 @@ let decorateEl = (function(){
   }
 }())
 
-function registerComponent(elementName, templateId, shadowHost = null) {
-  debugger;
+function registerComponent(elementName, templateId) {
   var CustomElement = document.registerElement(elementName);
   var link = document.querySelector('link[rel="import"]' + templateId + '-comp');
   var template = link.import.querySelector(templateId).innerHTML;
   var component = decorateEl(new CustomElement());
-  if(shadowHost !== null) {
+  if(typeof shadowHost !== 'undefined' || shadowHost !== null) {
     var host = document.querySelector(shadowHost);
     var root = host.createShadowRoot();
     component.innerHTML = template;

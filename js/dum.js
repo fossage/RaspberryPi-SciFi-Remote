@@ -1,21 +1,22 @@
 'use strict';
-export function registerComponent(elementName, templateId, shadowHost = null) {
+export function registerComponent(elementName, templateId, shadowHost) {
   var CustomElement = document.registerElement(elementName);
   var link = document.querySelector('link[rel="import"]' + templateId + '-comp');
   var template = link.import.querySelector(templateId).innerHTML;
   var component = decorateEl(new CustomElement());
   component.innerHTML = template;
-  if(shadowHost !== null) {
+  if (shadowHost !== null) {
     var host = document.querySelector(shadowHost);
     var root = host.createShadowRoot();
     root.appendChild(component);
   } else {
     document.body.appendChild(component);
   }
+
   return component;
 }
 
-export function createEl(elName){
+export function createEl(elName) {
   let el = document.createElement(elName);
   var decoratedEl = decorateEl(el);
   return decoratedEl;
@@ -25,14 +26,17 @@ export let dispatcher = (function() {
   let eventHash = Object.create(null);
   let d = {};
   Object.defineProperties(d, {
-    subscribeTo: (eName, handler) => { 
-      if(!(eName in eventHash)) eventHash[eName] = [];
+    subscribeTo: (eName, handler) => {
+      if (!(eName in eventHash)) {
+        eventHash[eName] = [];
+      }
+
       eventHash[eName].push(handler);
     }
-  })
+  });
 }());
 
-export let decorateEl = (function(){
+export let decorateEl = (function() {
   var uid = 0;
   return (el) => {
     Object.defineProperties(el, {
@@ -42,14 +46,17 @@ export let decorateEl = (function(){
       },
       click: {
         value: (cb) => {
-          if (typeof cb !== 'function') throw new TypeError('Argument to click must be a function');
+          if (typeof cb !== 'function') {
+            throw new TypeError('Argument to click must be a function');
+          }
+
           el.onclick = cb.bind(el, el);
           return el;
         }
       },
       append: {
         value: (...args) => {
-          [...args].forEach(function(childEl){
+          [...args].forEach(function(childEl) {
             el.appendChild(childEl);
           });
           return el;
@@ -57,8 +64,29 @@ export let decorateEl = (function(){
       },
       setClass: {
         value: (...args) => {
-          el.className = [...args];
+          el.classList.add(...args);
           return el;
+        }
+      },
+      removeClass: {
+        value: (...args) => {
+          el.classList.remove(...args);
+        }
+      },
+      toggleClass: {
+        value: (className) => {
+          el.classList.toggle(className);
+        }
+      },
+      flashClass: {
+        value: (className, duration = 200) => {
+          el.classList.toggle(className);
+          
+          let t = setTimeout(() => {
+            el.classList.toggle(className);
+          }, duration);
+          
+          clearTimeout(t);
         }
       },
       setId: {
@@ -87,8 +115,8 @@ export let decorateEl = (function(){
       },
       subscribe: {
         value: function(name, cb) {
-          window.addEventListener(name, function(e){
-            cb.call(el, e)
+          window.addEventListener(name, function(e) {
+            cb.call(el, e);
           });
           return el;
         }
@@ -106,5 +134,5 @@ export let decorateEl = (function(){
     });
     
     return el;
-  }
-}())
+  };
+}());;

@@ -1,6 +1,6 @@
 'use strict';
 
-import {createEl} from "./dum"
+import {createEl} from './dum';
 
 export let x = {};
 Object.defineProperties(x, {
@@ -11,289 +11,476 @@ Object.defineProperties(x, {
     }
   },
   a: {
-    get: () => { return createEl('a') }
+    get: () => {
+      return createEl('a');
+    }
   },
   p: {
-    get: () => { return createEl('p') }
+    get: () => {
+      return createEl('p');
+    }
   },
   h1:  {
-    get: () => { return createEl('h1') }
+    get: () => {
+      return createEl('h1');
+    }
   },
   h2:  {
-    get: () => { return createEl('h2') }
+    get: () => {
+      return createEl('h2');
+    }
   },
   h3:  {
-    get: () => { return createEl('h3') }
+    get: () => {
+      return createEl('h3');
+    }
   },
   h4:  {
-    get: () => { return createEl('h4') }
+    get: () => {
+      return createEl('h4');
+    }
   },
   h5:  {
-    get: () => { return createEl('h5') }
+    get: () => {
+      return createEl('h5');
+    }
   },
   h6:  {
-    get: () => { return createEl('h6') }
+    get: () => {
+      return createEl('h6');
+    }
   },
   ul:  {
-    get: () => { return createEl('ul') }
+    get: () => {
+      return createEl('ul');
+    }
   },
   ol: {
-    get: () => { return createEl('ol') }
+    get: () => {
+      return createEl('ol');
+    }
   },
   li: {
-    get: () => { return createEl('li') }
+    get: () => {
+      return createEl('li');
+    }
   },
   div: {
-    get: () => { return createEl('div') }
+    get: () => {
+      return createEl('div');
+    }
   },
   small: {
-    get: () => { return createEl('small') }
+    get: () => {
+      return createEl('small');
+    }
   },
   footer: {
-    get: () => { return createEl('footer') }
+    get: () => {
+      return createEl('footer');
+    }
   },
   header: {
-    get: () => { return createEl('header') }
+    get: () => {
+      return createEl('header');
+    }
   },
   hgroup: {
-    get: () => { return createEl('hgroup') }
+    get: () => {
+      return createEl('hgroup');
+    }
   },
   nav: {
-    get: () => { return createEl('nav') }
+    get: () => {
+      return createEl('nav');
+    }
   },
   dd: {
-    get: () => { return createEl('dd') }
+    get: () => {
+      return createEl('dd');
+    }
   },
   dl: {
-    get: () => { return createEl('dl') }
+    get: () => {
+      return createEl('dl');
+    }
   },
   dt: {
-    get: () => { return createEl('dt') }
+    get: () => {
+      return createEl('dt');
+    }
   },
   figcaption: {
-    get: () => { return createEl('figcaption') }
+    get: () => {
+      return createEl('figcaption');
+    }
   },
   figure: {
-    get: () => { return createEl('figure') }
+    get: () => {
+      return createEl('figure');
+    }
   },
   hr: {
-    get: () => { return createEl('hr') }
+    get: () => {
+      return createEl('hr');
+    }
   },
   main: {
-    get: () => { return createEl('main') }
+    get: () => {
+      return createEl('main');
+    }
   },
   pre: {
-    get: () => { return createEl('pre') }
+    get: () => {
+      return createEl('pre');
+    }
   },
   abbr: {
-    get: () => { return createEl('abbr') }
+    get: () => {
+      return createEl('abbr');
+    }
   },
   b: {
-    get: () => { return createEl('b') }
+    get: () => {
+      return createEl('b');
+    }
   },
   bdi: {
-    get: () => { return createEl('bdi') }
+    get: () => {
+      return createEl('bdi');
+    }
   },
   bdo: {
-    get: () => { return createEl('bdo') }
+    get: () => {
+      return createEl('bdo');
+    }
   },
   br: {
-    get: () => { return createEl('br') }
+    get: () => {
+      return createEl('br');
+    }
   },
   cite: {
-    get: () => { return createEl('cite') }
+    get: () => {
+      return createEl('cite');
+    }
   },
   code: {
-    get: () => { return createEl('code') }
+    get: () => {
+      return createEl('code');
+    }
   },
   data: {
-    get: () => { return createEl('data') }
+    get: () => {
+      return createEl('data');
+    }
   },
   dfn: {
-    get: () => { return createEl('dfn') }
+    get: () => {
+      return createEl('dfn');
+    }
   },
   em: {
-    get: () => { return createEl('em') }
+    get: () => {
+      return createEl('em');
+    }
   },
   i: {
-    get: () => { return createEl('i') }
+    get: () => {
+      return createEl('i');
+    }
   },
   kdb: {
-    get: () => { return createEl('kdb') }
+    get: () => {
+      return createEl('kdb');
+    }
   },
   mark: {
-    get: () => { return createEl('mark') }
+    get: () => {
+      return createEl('mark');
+    }
   },
   q: {
-    get: () => { return createEl('q') }
+    get: () => {
+      return createEl('q');
+    }
   },
   rp: {
-    get: () => { return createEl('rp') }
+    get: () => {
+      return createEl('rp');
+    }
   },
   rt: {
-    get: () => { return createEl('rt') }
+    get: () => {
+      return createEl('rt');
+    }
   },
   rtc: {
-    get: () => { return createEl('rtc') }
+    get: () => {
+      return createEl('rtc');
+    }
   },
   ruby: {
-    get: () => { return createEl('ruby') }
+    get: () => {
+      return createEl('ruby');
+    }
   },
   s: {
-    get: () => { return createEl('s') }
+    get: () => {
+      return createEl('s');
+    }
   },
   samp: {
-    get: () => { return createEl('samp') }
+    get: () => {
+      return createEl('samp');
+    }
   },
   span: {
-    get: () => { return createEl('span') }
+    get: () => {
+      return createEl('span');
+    }
   },
   strong: {
-    get: () => { return createEl('strong') }
+    get: () => {
+      return createEl('strong');
+    }
   },
   sub: {
-    get: () => { return createEl('sub') }
+    get: () => {
+      return createEl('sub');
+    }
   },
   sup: {
-    get: () => { return createEl('sup') }
+    get: () => {
+      return createEl('sup');
+    }
   },
   time: {
-    get: () => { return createEl('time') }
+    get: () => {
+      return createEl('time');
+    }
   },
   u: {
-    get: () => { return createEl('u') }
+    get: () => {
+      return createEl('u');
+    }
   },
   wbr: {
-    get: () => { return createEl('wbr') }
+    get: () => {
+      return createEl('wbr');
+    }
   },
   area: {
-    get: () => { return createEl('area') }
+    get: () => {
+      return createEl('area');
+    }
   },
   audio: {
-    get: () => { return createEl('audio') }
+    get: () => {
+      return createEl('audio');
+    }
   },
   map: {
-    get: () => { return createEl('map') }
+    get: () => {
+      return createEl('map');
+    }
   },
   track: {
-    get: () => { return createEl('track') }
+    get: () => {
+      return createEl('track');
+    }
   },
   video: {
-    get: () => { return createEl('video') }
+    get: () => {
+      return createEl('video');
+    }
   },
   embed: {
-    get: () => { return createEl('embed') }
+    get: () => {
+      return createEl('embed');
+    }
   },
   object: {
-    get: () => { return createEl('object') }
+    get: () => {
+      return createEl('object');
+    }
   },
   param: {
-    get: () => { return createEl('param') }
+    get: () => {
+      return createEl('param');
+    }
   },
   source: {
-    get: () => { return createEl('source') }
+    get: () => {
+      return createEl('source');
+    }
   },
   canvas: {
-    get: () => { return createEl('canvas') }
+    get: () => {
+      return createEl('canvas');
+    }
   },
   caption: {
-    get: () => { return createEl('caption') }
+    get: () => {
+      return createEl('caption');
+    }
   },
   col: {
-    get: () => { return createEl('col') }
+    get: () => {
+      return createEl('col');
+    }
   },
   colgroup: {
-    get: () => { return createEl('colgroup') }
+    get: () => {
+      return createEl('colgroup');
+    }
   },
   table: {
-    get: () => { return createEl('table') }
+    get: () => {
+      return createEl('table');
+    }
   },
   tbody: {
-    get: () => { return createEl('tbody') }
+    get: () => {
+      return createEl('tbody');
+    }
   },
   td: {
-    get: () => { return createEl('td') }
+    get: () => {
+      return createEl('td');
+    }
   },
   tfoot: {
-    get: () => { return createEl('tfooter') }
+    get: () => {
+      return createEl('tfooter');
+    }
   },
   th: {
-    get: () => { return createEl('th') }
+    get: () => {
+      return createEl('th');
+    }
   },
   thead: {
-    get: () => { return createEl('thead') }
+    get: () => {
+      return createEl('thead');
+    }
   },
   tr: {
-    get: () => { return createEl('tr') }
+    get: () => {
+      return createEl('tr');
+    }
   },
   button: {
-    get: () => { return createEl('button') }
+    get: () => {
+      return createEl('button');
+    }
   },
   datalist: {
-    get: () => { return createEl('datalist') }
+    get: () => {
+      return createEl('datalist');
+    }
   },
   fieldset: {
-    get: () => { return createEl('fieldset') }
+    get: () => {
+      return createEl('fieldset');
+    }
   },
   form: {
-    get: () => { return createEl('form') }
+    get: () => {
+      return createEl('form');
+    }
   },
   input: {
-    get: () => { return createEl('input') }
+    get: () => {
+      return createEl('input');
+    }
   },
   keygen: {
-    get: () => { return createEl('keygen') }
+    get: () => {
+      return createEl('keygen');
+    }
   },
   label: {
-    get: () => { return createEl('label') }
+    get: () => {
+      return createEl('label');
+    }
   },
   legend: {
-    get: () => { return createEl('legend') }
+    get: () => {
+      return createEl('legend');
+    }
   },
   meter: {
-    get: () => { return createEl('meter') }
+    get: () => {
+      return createEl('meter');
+    }
   },
   optgroup: {
-    get: () => { return createEl('optgroup') }
+    get: () => {
+      return createEl('optgroup');
+    }
   },
   option: {
-    get: () => { return createEl('option') }
+    get: () => {
+      return createEl('option');
+    }
   },
   progress: {
-    get: () => { return createEl('progress') }
+    get: () => {
+      return createEl('progress');
+    }
   },
   select: {
-    get: () => { return createEl('select') }
+    get: () => {
+      return createEl('select');
+    }
   },
   details: {
-    get: () => { return createEl('details') }
+    get: () => {
+      return createEl('details');
+    }
   },
   dialog: {
-    get: () => { return createEl('dialog') }
+    get: () => {
+      return createEl('dialog');
+    }
   },
   menu: {
-    get: () => { return createEl('menu') }
+    get: () => {
+      return createEl('menu');
+    }
   },
   menuitem: {
-    get: () => { return createEl('menuitem') }
+    get: () => {
+      return createEl('menuitem');
+    }
   },
   summary: {
-    get: () => { return createEl('summary') }
+    get: () => {
+      return createEl('summary');
+    }
   },
   
   //componenets
   content: {
-    get: () => { return createEl('content') }
+    get: () => {
+      return createEl('content');
+    }
   },
   element: {
-    get: () => { return createEl('element') }
+    get: () => {
+      return createEl('element');
+    }
   },
   shadow: {
-    get: () => { return createEl('shadow') }
+    get: () => {
+      return createEl('shadow');
+    }
   },
   template: {
-    get: () => { return createEl('template') }
+    get: () => {
+      return createEl('template');
+    }
   }
 });
 
-  
