@@ -95,4 +95,4 @@ function registerComponent(elementName, templateId) {
   return component;
 }
 
-registerComponent('my-list', '#list', null);
+// registerComponent('my-list', '#list', null);

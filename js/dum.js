@@ -4,7 +4,9 @@ export function registerComponent(elementName, templateId, shadowHost) {
   var link = document.querySelector('link[rel="import"]' + templateId + '-comp');
   var template = link.import.querySelector(templateId).innerHTML;
   var component = decorateEl(new CustomElement());
+  
   component.innerHTML = template;
+  
   if (shadowHost !== null) {
     var host = document.querySelector(shadowHost);
     var root = host.createShadowRoot();
@@ -25,6 +27,7 @@ export function createEl(elName) {
 export let dispatcher = (function() {
   let eventHash = Object.create(null);
   let d = {};
+  
   Object.defineProperties(d, {
     subscribeTo: (eName, handler) => {
       if (!(eName in eventHash)) {
@@ -45,14 +48,13 @@ export let decorateEl = (function() {
         value: ++uid
       },
       click: {
-        value: (cb) => {
-          if (typeof cb !== 'function') {
-            throw new TypeError('Argument to click must be a function');
-          }
-
-          el.onclick = cb.bind(el, el);
-          return el;
-        }
+        value: _setUpHandler('click', el)
+      },
+      mouseDown: {
+        value: _setUpHandler('mouseDown', el)
+      },
+      mouseUp: {
+        value: _setUpHandler('mouseUp', el)
       },
       append: {
         value: (...args) => {
@@ -79,14 +81,13 @@ export let decorateEl = (function() {
         }
       },
       flashClass: {
-        value: (className, duration = 200) => {
+        value: (className, duration = 75) => {
           el.classList.toggle(className);
           
           let t = setTimeout(() => {
             el.classList.toggle(className);
+            clearTimeout(t);
           }, duration);
-          
-          clearTimeout(t);
         }
       },
       setId: {
@@ -95,9 +96,12 @@ export let decorateEl = (function() {
           return el;
         }
       },
-      style: {
+      setStyle: {
         value: (rules) => {
-          rules.keys().forEach(key => el.style[key] = rules[key]);
+          Object.keys(rules).forEach((key) => {
+            el.style[key] = rules[key];
+          });
+          return el;
         }
       },
       text: {
@@ -135,4 +139,16 @@ export let decorateEl = (function() {
     
     return el;
   };
-}());;
+}());
+
+function _setUpHandler(name, el) {
+  return (cb) => {
+    if (typeof cb !== 'function') {
+      throw new TypeError(`Argument to ${name} must be a function`);
+    }
+    
+    let domName = `on${name.toLowerCase()}`;
+    el[domName] = cb.bind(el, el);
+    return el;
+  };
+}

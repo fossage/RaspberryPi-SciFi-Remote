@@ -5,10 +5,16 @@ import {createEl} from './dum';
 export let x = {};
 Object.defineProperties(x, {
   attach: {
-    value: (fragment) => {
-      document.body.appendChild(fragment);
-      return fragment;
+    value: (...args) => {
+      [...args].forEach((arg) => {
+        document.body.appendChild(arg);
+      });
+      
+      return args;
     }
+  },
+  output: {
+    value: el => el
   },
   a: {
     get: () => {
