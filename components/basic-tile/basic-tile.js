@@ -1,13 +1,20 @@
-import {registerComponent} from '../../js/dum';
+'use strict'
+
 import {x} from '../../js/elements';
 
-export let Tile = (text = '', click = () =>{return}) => {
+export let Tile = (opts) => {
+  if(typeof opts === 'undefined') {
+    opts = {};
+  }
   
   let outerDiv = x
     .div
       .setClass('tile-outer', 'tile')
-      .mouseDown(el => el.toggleClass('highlighted'))
-      .mouseUp(el => el.toggleClass('highlighted'))
+      .setStyle({
+        height: opts.height || '300px',
+        width: opts.width || '300px',
+        border: opts.border || '1px solid #666'
+      })
       
   
   let innerDiv = x
@@ -16,12 +23,14 @@ export let Tile = (text = '', click = () =>{return}) => {
 
   let title = x
     .h1
+      .text(opts.text || 'hi')
+      .mouseDown(el => el.text('(╯°□°)╯︵ ┻━┻'))
+      .mouseUp(el => el.text(opts.text))
       .setStyle({
         textAlign: 'center',
         verticalAlign: 'middle',
-        color: 'blue'
+        color: opts.color || 'blue'
       })
-      .text(text)
 
   return x.output(
     

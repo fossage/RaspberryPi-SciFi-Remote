@@ -1,15 +1,16 @@
 'use strict';
+
 export function registerComponent(elementName, templateId, shadowHost) {
-  var CustomElement = document.registerElement(elementName);
-  var link = document.querySelector('link[rel="import"]' + templateId + '-comp');
-  var template = link.import.querySelector(templateId).innerHTML;
-  var component = decorateEl(new CustomElement());
+  let CustomElement = document.registerElement(elementName);
+  let link = document.querySelector('link[rel="import"]' + templateId + '-comp');
+  let template = link.import.querySelector(templateId).innerHTML;
+  let component = decorateEl(new CustomElement());
   
   component.innerHTML = template;
   
   if (shadowHost !== null) {
-    var host = document.querySelector(shadowHost);
-    var root = host.createShadowRoot();
+    let host = document.querySelector(shadowHost);
+    let root = host.createShadowRoot();
     root.appendChild(component);
   } else {
     document.body.appendChild(component);
@@ -20,7 +21,7 @@ export function registerComponent(elementName, templateId, shadowHost) {
 
 export function createEl(elName) {
   let el = document.createElement(elName);
-  var decoratedEl = decorateEl(el);
+  let decoratedEl = decorateEl(el);
   return decoratedEl;
 }
 
@@ -40,22 +41,26 @@ export let dispatcher = (function() {
 }());
 
 export let decorateEl = (function() {
-  var uid = 0;
+  let uid = 0;
   return (el) => {
     Object.defineProperties(el, {
       $uid: {
         writable: false,
         value: ++uid
       },
+      
       click: {
         value: _setUpHandler('click', el)
       },
+      
       mouseDown: {
         value: _setUpHandler('mouseDown', el)
       },
+      
       mouseUp: {
         value: _setUpHandler('mouseUp', el)
       },
+      
       append: {
         value: (...args) => {
           [...args].forEach(function(childEl) {
@@ -64,22 +69,26 @@ export let decorateEl = (function() {
           return el;
         }
       },
+      
       setClass: {
         value: (...args) => {
           el.classList.add(...args);
           return el;
         }
       },
+      
       removeClass: {
         value: (...args) => {
           el.classList.remove(...args);
         }
       },
+      
       toggleClass: {
         value: (className) => {
           el.classList.toggle(className);
         }
       },
+      
       flashClass: {
         value: (className, duration = 75) => {
           el.classList.toggle(className);
@@ -90,47 +99,72 @@ export let decorateEl = (function() {
           }, duration);
         }
       },
+      
       setId: {
         value: (id) => {
           el.id = id;
           return el;
         }
       },
+      
       setStyle: {
-        value: (rules) => {
+        value: (rules, hard) => {
+          let compClass = `component-${el.$uid}`;
+          el.setClass(compClass);
+          
+          let styleSheet;
+          
+          if(document.styleSheets.length){
+            styleSheet = document.styleSheets[0];
+          } else {
+            var styleEl = document.createElement('style');
+            document.head.appendChild(styleEl); 
+            styleSheet = styleEl.sheet;
+          }
+
+          var rule = `.${compClass} {\n`;
+          
           Object.keys(rules).forEach((key) => {
-            el.style[key] = rules[key];
+            let ssKey = key.split(/(?=[A-Z])/).join("-");
+            rule += `${ssKey}: ${rules[key]};\n`;
           });
+          
+          rule += '}';
+          styleSheet.insertRule(rule, styleSheet.cssRules.length)
           return el;
         }
       },
+      
       text: {
         value: (txt) => {
           el.innerText = txt;
           return el;
         }
       },
+      
       publish: {
         value: function(eventName, data) {
-          var e = new CustomEvent(eventName, {detail: {data: data}, bubbles: true, cancelable: false});
+          let e = new CustomEvent(eventName, {detail: {data: data}, bubbles: true, cancelable: false});
           el.dispatchEvent(e);
           return el;
         }
       },
+      
       subscribe: {
         value: function(name, cb) {
           window.addEventListener(name, function(e) {
-            cb.call(el, e);
+            cb.call(el, e, e.detail.data);
           });
           return el;
         }
       },
+      
       shadow: {
         value: function(templateId) {
-          var link = document.querySelector('link[rel="import"]' + templateId + '-comp');
-          var template = link.import.querySelector(templateId);
-          var root = el.createShadowRoot();
-          var clone = document.importNode(template.content, true);
+          let link = document.querySelector('link[rel="import"]' + templateId + '-comp');
+          let template = link.import.querySelector(templateId);
+          let root = el.createShadowRoot();
+          let clone = document.importNode(template.content, true);
           root.appendChild(clone);
           return el;
         }
