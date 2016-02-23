@@ -1,14 +1,11 @@
 'use strict'
 
 import {x} from '../js/elements';
+import {pxParser} from '../utils/string-utils';
 
 export let Tile = (opts) => {
   if(typeof opts === 'undefined') {
     opts = {};
-  }
-  
-  function pxParser(rule) {
-    return parseInt(rule.slice(0, -2));
   }
   
   let styles = { 
@@ -93,4 +90,14 @@ export let Tile = (opts) => {
     )
     
   )
+}
+
+Tile.repeat = (...args) => {
+  let outputArray = [];
+  [...args].forEach((opt, idx) => {
+    outputArray.push(Tile(opt))
+  });
+    debugger
+  
+  return outputArray;
 }

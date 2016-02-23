@@ -8,7 +8,11 @@ import {OCMButton} from '../components/ocm-button'
 let TweenMax = require('gsap');
 
 /*======== COMPONENT SETUP =======*/
-
+let opts = [
+  {text: 'Tile1'},
+  {text: 'Tile2'},
+  {text: 'Tile2'}
+]
 
 let tile1 = Tile({
   height: '200px',
@@ -16,6 +20,7 @@ let tile1 = Tile({
   text: 'Lights'
 });
 
+let tiles = Tile.repeat(opts);
 let ocm = OCM();
 let ocmButton = OCMButton();
 
