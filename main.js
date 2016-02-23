@@ -1,10 +1,15 @@
 'use strict';
 
 const electron = require('electron');
-// Module to control application life.
 const app = electron.app;
+// Module to control application life.
+
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
+
+var onlineStatusWindow;
+const ipcMain = electron.ipcMain;
+const dialog = require('electron').dialog;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -12,14 +17,25 @@ let mainWindow;
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600});
+  const electronScreen = electron.screen;
+  var size = electronScreen.getPrimaryDisplay().workAreaSize;
+ 
+  mainWindow = new BrowserWindow({ 
+    width: size.width, 
+    height: size.height, 
+    icon: './img/sloth.jpg',
+    backgroundColor: '#BDF4DE'
+  });
 
   // and load the index.html of the app.
-  mainWindow.loadUrl('file://' + __dirname + '/public/index.html');
+  mainWindow.loadURL('file://' + __dirname + '/public/index.html');
+  onlineStatusWindow = new BrowserWindow({ width: 0, height: 0, show: false });
+  onlineStatusWindow.loadURL('file://' + __dirname + 'public/online-status.html');
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
-
+  
+  
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
     // Dereference the window object, usually you would store windows
@@ -28,6 +44,10 @@ function createWindow () {
     mainWindow = null;
   });
 }
+
+ipcMain.on('online-status-changed', function(event, status) {
+  console.log(status);
+});
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

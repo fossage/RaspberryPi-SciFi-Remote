@@ -159,6 +159,13 @@ export let decorateEl = (function() {
         }
       },
       
+      setSrc: {
+        value: (src) => {
+          el.src = src;
+          return el;
+        }
+      },
+      
       shadow: {
         value: function(templateId) {
           let link = document.querySelector('link[rel="import"]' + templateId + '-comp');

@@ -76,6 +76,11 @@ Object.defineProperties(x, {
       return createEl('div');
     }
   },
+  img: {
+    get: () => {
+      return createEl('IMG');
+    }
+  },
   small: {
     get: () => {
       return createEl('small');
