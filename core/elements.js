@@ -7,9 +7,16 @@ Object.defineProperties(x, {
   attach: {
     value: (...args) => {
       [...args].forEach((arg) => {
-        document.body.appendChild(arg);
+        if(arg){
+          if(arg.constructor === Array){
+            arg.forEach((elem) => {
+              document.body.appendChild(elem);
+            })
+          } else {
+            document.body.appendChild(arg);
+          }
+        }
       });
-      
       return args;
     }
   },

@@ -1,4 +1,4 @@
 require('babel-polyfill');
-require('./dum');
-require('./elements');
+require('../core/dum');
+require('../core/elements');
 require('./playground');

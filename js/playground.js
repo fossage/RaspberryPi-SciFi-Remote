@@ -1,6 +1,5 @@
-import {registerComponent} from './dum';
-import {x} from './elements';
-
+import {registerComponent} from '../core/dum';
+import {x} from '../core/elements';
 import {Tile} from '../components/basic-tile';
 import {OCM} from '../components/ocm';
 import {OCMButton} from '../components/ocm-button'
@@ -9,18 +8,30 @@ let TweenMax = require('gsap');
 
 /*======== COMPONENT SETUP =======*/
 let opts = [
-  {text: 'Tile1'},
-  {text: 'Tile2'},
-  {text: 'Tile2'}
+  {
+    text: 'Tile1',
+    backgroundColor: 'RGBA(189, 244, 222, 1)',
+    marginBottom: '10px'
+  },
+  {
+    text: 'Tile2',
+    backgroundColor: 'RGBA(189, 244, 222, 1)',
+    marginBottom: '10px'
+  },
+  {
+    text: 'Tile2',
+    backgroundColor: 'RGBA(189, 244, 222, 1)',
+    marginBottom: '10px'
+  }
 ]
 
-let tile1 = Tile({
-  height: '200px',
-  width: '200px',
-  text: 'Lights'
+let tile1 = Tile({ marginBottom: '10px', text: 'Lights' });
+
+tile1.click((el) => {
+  TweenMax.staggerFrom(tiles, 0.5, {opacity: 0, y:200, rotation: 360, scale:2}, 0.2);
 });
 
-let tiles = Tile.repeat(opts);
+let tiles = Tile(opts);
 let ocm = OCM();
 let ocmButton = OCMButton();
 
@@ -28,7 +39,8 @@ let ocmButton = OCMButton();
 x.attach(
   ocmButton,
   tile1,
-  ocm
+  ocm,
+  tiles
 );
  
 // registerComponent('my-list', '#list', '#mydiv').subscribe('alertfired', function(e){ this.innerHTML = '<ul><li>Fifth Thing</li><li>Fourth Thing</li><li>Third Thing</li><li>Second Thing</li><li>First Thing</li></ul>'; });

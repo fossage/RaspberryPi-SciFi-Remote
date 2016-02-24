@@ -1,4 +1,4 @@
-import {x} from '../js/elements';
+import {x} from '../core/elements';
 
 export let OCMButton = (opts) => {
   if(typeof opts === 'undefined') {

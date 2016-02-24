@@ -1,15 +1,12 @@
 'use strict';
 
-import {x} from '../js/elements';
+import {x} from '../core/elements';
+import {Component} from '../core/component-factory';
 let TweenMax = require('gsap');
 
 const electron = require('electron');
 
-export let OCM = (opts) => {
-  if(typeof opts === 'undefined') {
-    opts = {};
-  }
-  
+export let OCM = Component((opts) => {
   let electronScreen = electron.screen;
   let size = electronScreen.getPrimaryDisplay().workAreaSize;
   
@@ -20,7 +17,8 @@ export let OCM = (opts) => {
     height: `${size.height - 3}px`,
     position: 'absolute',
     top: '0',
-    left: '-310px'
+    left: '-310px',
+    zIndex: '1'
   }
   
   let container = x
@@ -39,4 +37,4 @@ export let OCM = (opts) => {
     .output(
       container
     )
-}
+});
