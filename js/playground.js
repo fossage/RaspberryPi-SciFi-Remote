@@ -7,7 +7,7 @@ import {OCMButton} from '../components/ocm-button'
 let TweenMax = require('gsap');
 
 /*======== COMPONENT SETUP =======*/
-let opts = [
+let tileOpts = [
   {
     text: 'Tile1',
     backgroundColor: 'RGBA(189, 244, 222, 1)',
@@ -23,7 +23,11 @@ let opts = [
     backgroundColor: 'RGBA(189, 244, 222, 1)',
     marginBottom: '10px'
   }
-]
+];
+
+let ocmOpts = {
+  items: ['item1', 'item2', 'item3', 'item4']
+}
 
 let tile1 = Tile({ marginBottom: '10px', text: 'Lights' });
 
@@ -31,9 +35,9 @@ tile1.click((el) => {
   TweenMax.staggerFrom(tiles, 0.5, {opacity: 0, y:200, rotation: 360, scale:2}, 0.2);
 });
 
-let tiles = Tile(opts);
-let ocm = OCM();
-let ocmButton = OCMButton();
+let tiles = Tile(tileOpts);
+let ocm = OCM(ocmOpts);
+let ocmButton = OCMButton({width: '30px'});
 
 /*======== LINKAGE =======*/
 x.attach(

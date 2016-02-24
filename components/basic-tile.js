@@ -7,6 +7,7 @@ import {Component} from '../core/component-factory';
 let TweenMax = require('gsap');
 
 export let Tile = Component((opts) => {
+  
   let styles = Object.assign({ 
     color: '#fff',
     textShadow: '2px 1px 2px rgba(150, 150, 150, 1)',
@@ -16,7 +17,9 @@ export let Tile = Component((opts) => {
     borderRadius: '15px',
     height: '200px',
     width: '200px',
-    zIndex: '0'
+    zIndex: '0',
+    display: 'inline-block',
+    margin: '10px'
   }, opts);
   
   
@@ -34,10 +37,6 @@ export let Tile = Component((opts) => {
     textShadow: '1px 1px 2px rgba(150, 150, 150, 1)',
     marginBottom: `${pxParser(styles.marginBottom) +1}px`
   };
-  
-  let outerDiv = x
-    .div
-      .setClass('tile-outer', 'tile')
 
   let innerDiv = x
     .div
@@ -65,13 +64,9 @@ export let Tile = Component((opts) => {
       })        
 
   return x.output(
-    
-    outerDiv.append(
-      innerDiv.append(
-        title
-      )
+    innerDiv.append(
+      title
     )
-    
   )
 });
 

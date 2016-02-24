@@ -63,8 +63,14 @@ export let decorateEl = (function() {
       
       append: {
         value: (...args) => {
-          [...args].forEach(function(childEl) {
-            el.appendChild(childEl);
+          [...args].forEach((childEl) => {
+            if(childEl.constructor === Array){
+              childEl.forEach((elem) => {
+                el.appendChild(elem);
+              });
+            } else {
+              el.appendChild(childEl);
+            }
           });
           return el;
         }

@@ -21,6 +21,16 @@ export let OCM = Component((opts) => {
     zIndex: '1'
   }
   
+  let items = [];
+  opts.items.forEach((item) => {
+    items.push(x.
+      li.append(
+        x.h1
+          .text(item)
+      )
+    );
+  });
+  
   let container = x
     .div
       .setStyle(containerStyles)
@@ -31,7 +41,18 @@ export let OCM = Component((opts) => {
       })
       .click(function(e){
         TweenMax.to(this, 0.3, containerStyles)
-      });
+        this.publish('closeOCM', {})
+      })
+      .append(x
+        .ul
+          .setStyle({listStyle: 'none'})
+          .append(
+            items
+          )
+          .subscribe('openOCM', (el) => {
+            TweenMax.staggerFrom(items, 0.2, {x: -200}, 0.1);
+          })
+      );
   
   return x
     .output(
