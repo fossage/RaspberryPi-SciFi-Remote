@@ -8,11 +8,15 @@ export let Component = (defaultConstructor) => {
       let outputArray = [];
   
       opts.forEach((opt) => {
-        outputArray.push(defaultConstructor(opt));
+        let comp = defaultConstructor(opt);
+        comp.$constructor = Component.apply(null, [defaultConstructor]);
+        outputArray.push(comp);
       });
       
       return outputArray; 
     }
-    return defaultConstructor(opts);
+    let comp = defaultConstructor(opts);
+    comp.$constructor = Component.apply(null, [defaultConstructor]);
+    return comp;
   }
 }

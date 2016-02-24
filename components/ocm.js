@@ -14,7 +14,7 @@ export let OCM = Component((opts) => {
     width: '300px',
     border: '0 2px solid #333',
     backgroundColor: 'RGBA(0, 117, 204, 1)',
-    height: `${size.height - 3}px`,
+    height: `${size.height}px`,
     position: 'absolute',
     top: '0',
     left: '-310px',

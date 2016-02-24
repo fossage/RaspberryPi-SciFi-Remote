@@ -76,6 +76,22 @@ export let decorateEl = (function() {
         }
       },
       
+      update: {
+        value: (options, componentFactory) => {
+          let parent = el.parent;
+          let comp = componentFactory(options);
+          parent.replaceChild(el, comp)
+          return el;
+        }
+      },
+      
+      remove: {
+        value: () => {
+          let parent = el.parent;
+          return parent.removeChild(el);
+        }
+      },
+      
       setClass: {
         value: (...args) => {
           el.classList.add(...args);
