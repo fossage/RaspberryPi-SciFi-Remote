@@ -19,8 +19,26 @@ let tileOpts = [
     marginBottom: '10px'
   },
   {
-    text: 'Tile2',
+    text: 'Tile3',
     backgroundColor: 'RGBA(189, 244, 222, 1)',
+    marginBottom: '10px'
+  }
+];
+
+let tileOpts2 = [
+  {
+    text: 'New',
+    backgroundColor: 'RGBA(39, 244, 222, 1)',
+    marginBottom: '10px'
+  },
+  {
+    text: 'New2',
+    backgroundColor: 'RGBA(19, 244, 222, 1)',
+    marginBottom: '10px'
+  },
+  {
+    text: 'New3',
+  backgroundColor: 'RGBA(189, 144, 222, 1)',
     marginBottom: '10px'
   }
 ];
@@ -37,6 +55,11 @@ tile1.click((el) => {
 
 let tiles = Tile(tileOpts);
 let ocm = OCM(ocmOpts);
+
+setTimeout(()=> {
+  tile1.update(tileOpts2);
+}, 4000);
+
 let ocmButton = OCMButton({width: '30px'});
 
 /*======== LINKAGE =======*/

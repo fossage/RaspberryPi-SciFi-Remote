@@ -63,11 +63,13 @@ export let decorateEl = (function() {
       
       append: {
         value: (...args) => {
+          let fragment = document.createDocumentFragment();
           [...args].forEach((childEl) => {
             if(childEl.constructor === Array){
               childEl.forEach((elem) => {
-                el.appendChild(elem);
+                fragment.appendChild(elem);
               });
+              el.appendChild(fragment);
             } else {
               el.appendChild(childEl);
             }
@@ -77,10 +79,9 @@ export let decorateEl = (function() {
       },
       
       update: {
-        value: (options, componentFactory) => {
-          let parent = el.parent;
-          let comp = componentFactory(options);
-          parent.replaceChild(el, comp)
+        value: (options) => {
+          let comp = el.$constructor(options);
+          el.parentNode.replaceChild(comp, el);
           return el;
         }
       },

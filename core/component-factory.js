@@ -1,22 +1,24 @@
 'use strict';
 
+import {decorateEl} from './dum';
+
 export let Component = (defaultConstructor) => {
   return (opts) => { 
+    let fragment = document.createDocumentFragment();
+    fragment.$constructor = Component.call(null, defaultConstructor);
     if(typeof opts === 'undefined') {
       opts = {};
     } else if(opts.constructor === Array) {
-      let outputArray = [];
   
       opts.forEach((opt) => {
         let comp = defaultConstructor(opt);
-        comp.$constructor = Component.apply(null, [defaultConstructor]);
-        outputArray.push(comp);
+        fragment.appendChild(comp);
       });
-      
-      return outputArray; 
+      return fragment; 
+    } else {
+      let comp = defaultConstructor(opts);
+      comp.$constructor = Component.call(null, defaultConstructor);
+      return comp;
     }
-    let comp = defaultConstructor(opts);
-    comp.$constructor = Component.apply(null, [defaultConstructor]);
-    return comp;
   }
 }
