@@ -33,7 +33,7 @@ export let OCM = Component((opts) => {
   
   let container = x
     .div
-      .setStyle(containerStyles)
+      .setStyles(containerStyles)
       .subscribe('openOCM', function(e){
         TweenMax.to(this, 0.3, {
           left: 0
@@ -45,7 +45,7 @@ export let OCM = Component((opts) => {
       })
       .append(x
         .ul
-          .setStyle({listStyle: 'none'})
+          .setStyles({listStyle: 'none'})
           .append(
             items
           )

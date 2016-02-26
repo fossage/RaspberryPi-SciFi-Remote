@@ -3,6 +3,7 @@ import {x} from '../core/elements';
 import {Tile} from '../components/basic-tile';
 import {OCM} from '../components/ocm';
 import {OCMButton} from '../components/ocm-button'
+import {Pane} from '../components/pane';
 
 let TweenMax = require('gsap');
 
@@ -25,49 +26,34 @@ let tileOpts = [
   }
 ];
 
-let tileOpts2 = [
-  {
-    text: 'New',
-    backgroundColor: 'RGBA(39, 244, 222, 1)',
-    marginBottom: '10px'
-  },
-  {
-    text: 'New2',
-    backgroundColor: 'RGBA(19, 244, 222, 1)',
-    marginBottom: '10px'
-  },
-  {
-    text: 'New3',
-  backgroundColor: 'RGBA(189, 144, 222, 1)',
-    marginBottom: '10px'
-  }
-];
-
 let ocmOpts = {
   items: ['item1', 'item2', 'item3', 'item4']
 }
 
-let tile1 = Tile({ marginBottom: '10px', text: 'Lights' });
+let weatherTile = Tile({ marginBottom: '10px', text: 'Weather' });
+let weatherPane = Pane({backgroundColor: '#333'});
 
-tile1.click((el) => {
-  TweenMax.staggerFrom(tiles, 0.5, {opacity: 0, y:200, rotation: 360, scale:2}, 0.2);
+weatherTile.mouseDown((el) => {
+  // TweenMax.staggerFrom(tiles, 0.5, {opacity: 0, y:200, rotation: 360, scale:2}, 0.2);
+  fetch('http://api.openweathermap.org/data/2.5/forecast?id=5809844&APPID=54d8527b214ab9b27a7a7ec7aee9efa0')
+  .then((response)=>{
+    response.json().then((data) => {
+      el.publish('openWeather', data)
+    });
+  });
 });
 
 let tiles = Tile(tileOpts);
 let ocm = OCM(ocmOpts);
-
-setTimeout(()=> {
-  tile1.update(tileOpts2);
-}, 4000);
-
 let ocmButton = OCMButton({width: '30px'});
 
 /*======== LINKAGE =======*/
 x.attach(
   ocmButton,
-  tile1,
+  weatherTile,
   ocm,
-  tiles
+  tiles,
+  weatherPane
 );
  
 // registerComponent('my-list', '#list', '#mydiv').subscribe('alertfired', function(e){ this.innerHTML = '<ul><li>Fifth Thing</li><li>Fourth Thing</li><li>Third Thing</li><li>Second Thing</li><li>First Thing</li></ul>'; });

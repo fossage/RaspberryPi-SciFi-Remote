@@ -17,12 +17,10 @@ let mainWindow;
 
 function createWindow () {
   // Create the browser window.
-  const electronScreen = electron.screen;
-  var size = electronScreen.getPrimaryDisplay().workAreaSize;
  
   mainWindow = new BrowserWindow({ 
-    width: size.width, 
-    height: size.height, 
+    width: 800,
+    height: 480, 
     icon: './img/sloth.jpg',
     backgroundColor: '#BDF4DE'
   });

@@ -12,7 +12,7 @@ export let OCMButton = Component((opts) => {
     .click((el) => {
       el.publish('openOCM', {});
     })
-    .setStyle(opts);
+    .setStyles(opts);
   
   return x.output(
     container.append(

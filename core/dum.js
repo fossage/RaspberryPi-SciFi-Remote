@@ -1,11 +1,10 @@
 'use strict';
 
 export function registerComponent(elementName, templateId, shadowHost) {
-  let CustomElement = document.registerElement(elementName);
-  let link = document.querySelector('link[rel="import"]' + templateId + '-comp');
-  let template = link.import.querySelector(templateId).innerHTML;
-  let component = decorateEl(new CustomElement());
-  
+  let CustomElement   = document.registerElement(elementName);
+  let link            = document.querySelector(`link[rel="import"]${templateId}-comp`);
+  let template        = link.import.querySelector(templateId).innerHTML;
+  let component       = decorateEl(new CustomElement());
   component.innerHTML = template;
   
   if (shadowHost !== null) {
@@ -20,25 +19,11 @@ export function registerComponent(elementName, templateId, shadowHost) {
 }
 
 export function createEl(elName) {
-  let el = document.createElement(elName);
+  let el          = document.createElement(elName);
   let decoratedEl = decorateEl(el);
+  
   return decoratedEl;
 }
-
-export let dispatcher = (function() {
-  let eventHash = Object.create(null);
-  let d = {};
-  
-  Object.defineProperties(d, {
-    subscribeTo: (eName, handler) => {
-      if (!(eName in eventHash)) {
-        eventHash[eName] = [];
-      }
-
-      eventHash[eName].push(handler);
-    }
-  });
-}());
 
 export let decorateEl = (function() {
   let uid = 0;
@@ -64,16 +49,19 @@ export let decorateEl = (function() {
       append: {
         value: (...args) => {
           let fragment = document.createDocumentFragment();
+          
           [...args].forEach((childEl) => {
             if(childEl.constructor === Array){
               childEl.forEach((elem) => {
                 fragment.appendChild(elem);
               });
+              
               el.appendChild(fragment);
             } else {
               el.appendChild(childEl);
             }
           });
+          
           return el;
         }
       },
@@ -111,18 +99,7 @@ export let decorateEl = (function() {
           el.classList.toggle(className);
         }
       },
-      
-      flashClass: {
-        value: (className, duration = 75) => {
-          el.classList.toggle(className);
-          
-          let t = setTimeout(() => {
-            el.classList.toggle(className);
-            clearTimeout(t);
-          }, duration);
-        }
-      },
-      
+
       setId: {
         value: (id) => {
           el.id = id;
@@ -130,8 +107,8 @@ export let decorateEl = (function() {
         }
       },
       
-      setStyle: {
-        value: (rules, hard) => {
+      setStyles: {
+        value: (rules) => {
           let compClass = `component-${el.$uid}`;
           el.setClass(compClass);
           
@@ -148,12 +125,13 @@ export let decorateEl = (function() {
           var rule = `.${compClass} {\n`;
           
           Object.keys(rules).forEach((key) => {
-            let ssKey = key.split(/(?=[A-Z])/).join("-");
-            rule += `${ssKey}: ${rules[key]};\n`;
+            let cssKey = key.split(/(?=[A-Z])/).join("-");
+            rule += `${cssKey}: ${rules[key]};\n`;
           });
           
           rule += '}';
           styleSheet.insertRule(rule, styleSheet.cssRules.length)
+          
           return el;
         }
       },
@@ -169,6 +147,7 @@ export let decorateEl = (function() {
         value: function(eventName, data) {
           let e = new CustomEvent(eventName, {detail: {data: data}, bubbles: true, cancelable: false});
           el.dispatchEvent(e);
+          
           return el;
         }
       },
@@ -178,6 +157,7 @@ export let decorateEl = (function() {
           window.addEventListener(name, function(e) {
             cb.call(el, e, e.detail.data);
           });
+          
           return el;
         }
       },
@@ -191,10 +171,11 @@ export let decorateEl = (function() {
       
       shadow: {
         value: function(templateId) {
-          let link = document.querySelector('link[rel="import"]' + templateId + '-comp');
+          let link     = document.querySelector('link[rel="import"]' + templateId + '-comp');
           let template = link.import.querySelector(templateId);
-          let root = el.createShadowRoot();
-          let clone = document.importNode(template.content, true);
+          let root     = el.createShadowRoot();
+          let clone    = document.importNode(template.content, true);
+          
           root.appendChild(clone);
           return el;
         }
@@ -205,6 +186,10 @@ export let decorateEl = (function() {
   };
 }());
 
+
+/*===========================================
+             PRIVATE FUNCTIONS 
+===========================================*/
 function _setUpHandler(name, el) {
   return (cb) => {
     if (typeof cb !== 'function') {
@@ -213,6 +198,7 @@ function _setUpHandler(name, el) {
     
     let domName = `on${name.toLowerCase()}`;
     el[domName] = cb.bind(el, el);
+    
     return el;
   };
 }

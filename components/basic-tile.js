@@ -15,20 +15,17 @@ export let Tile = Component((opts) => {
     boxShadow: '2px 2px 3px #333',
     border: '2px solid #333',
     borderRadius: '15px',
-    height: '200px',
-    width: '200px',
+    height: '170px',
+    width: '170px',
     zIndex: '0',
     display: 'inline-block',
     margin: '10px'
   }, opts);
-  
-  
-  
-  let rules = styles.boxShadow.split(' ');
+
+  let rules              = styles.boxShadow.split(' ');
   let depressedBoxShadow = '';
-  
-  let heightUpdate = `${pxParser(styles.height) -1}px`;
-  let widthUpdate = `${pxParser(styles.width)}px`;
+  let heightUpdate       = `${pxParser(styles.height) -1}px`;
+  let widthUpdate        = `${pxParser(styles.width)}px`;
 
   let mouseDownStyles = {
     boxShadow: '1px 1px 2px #222',
@@ -41,13 +38,13 @@ export let Tile = Component((opts) => {
   let innerDiv = x
     .div
       .setClass('tile-inner')
-      .setStyle(styles)
+      .setStyles(styles)
       .mouseDown(function(el){
-        this.setStyle(mouseDownStyles);
+        this.setStyles(mouseDownStyles);
         this.publish('tileDepressed', {});
       })
       .mouseUp(function(el){
-        this.setStyle(styles);
+        this.setStyles(styles);
         this.publish('tileReleased', {});
       });
 
@@ -56,7 +53,7 @@ export let Tile = Component((opts) => {
       .text(opts.text || 'hi')
       .mouseDown(el => el.text('(╯°□°)╯︵ ┻━┻'))
       .mouseUp(el => el.text(opts.text))
-      .setStyle({
+      .setStyles({
         textAlign: opts.textAlign || 'center',
         verticalAlign: opts.verticalAlign || 'middle',
         color: opts.color || '#333',
