@@ -134,7 +134,7 @@ export let decorateEl = (function() {
           });
           
           rule += '}';
-          styleSheet.insertRule(rule, styleSheet.cssRules.length)
+          styleSheet.insertRule(rule, styleSheet.cssRules.length);
           
           return el;
         }

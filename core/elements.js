@@ -12,7 +12,9 @@ Object.defineProperties(x, {
         overflow: 'hidden',
         height: '400px',
         width: '800px',
-        cursor: 'none'
+        backgroundImage: 'url("./img/background/80s.jpg")',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat'
       });
       
       let fragment = decorateEl(document.createDocumentFragment());

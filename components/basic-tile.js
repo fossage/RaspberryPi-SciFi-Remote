@@ -13,10 +13,11 @@ export let Tile = Component((opts) => {
     textShadow: '2px 1px 2px rgba(150, 150, 150, 1)',
     backgroundColor: '#46ACEC',
     boxShadow: '2px 2px 3px #333',
-    border: '2px solid #333',
-    borderRadius: '15px',
-    height: '170px',
-    width: '170px',
+    border: '1px  RGB(0, 15, 72)',
+    transform: 'skew(-6deg, 0deg)',
+    borderRadius: '4px',
+    height: '150px',
+    width: '150px',
     zIndex: '0',
     display: 'inline-block',
     margin: '10px'
@@ -57,8 +58,8 @@ export let Tile = Component((opts) => {
         textAlign: opts.textAlign || 'center',
         verticalAlign: opts.verticalAlign || 'middle',
         color: opts.color || '#333',
-        fontSize: opts.fontSize || '2.0em'
-      })        
+        fontSize: opts.fontSize || '1.6em'
+      });
 
   return x.output(
     innerDiv.append(

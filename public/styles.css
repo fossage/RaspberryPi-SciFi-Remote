@@ -1,5 +1,10 @@
+@font-face {
+  font-family: rad ;
+  src: url(./fonts/VIPESSRG.ttf);
+}
+
 * {
-  font-family: sans-serif;
+  font-family: rad;
 }
 
 .highlighted {
