@@ -22,11 +22,16 @@ function createWindow () {
     width: 800,
     height: 480, 
     icon: './img/sloth.jpg',
+    skipTaskbar: true,
+    autoHideMenuBar: true,
+    type: 'splash',
     backgroundColor: '#BDF4DE'
   });
 
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/public/index.html');
+  mainWindow.setFullScreen(true);
+  
   onlineStatusWindow = new BrowserWindow({ width: 0, height: 0, show: false });
   onlineStatusWindow.loadURL('file://' + __dirname + 'public/online-status.html');
 

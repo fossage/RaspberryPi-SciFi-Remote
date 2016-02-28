@@ -1,23 +1,35 @@
 'use strict';
 
-import {createEl} from './dum';
+import {decorateEl, createEl} from './dum';
 
 export let x = {};
 Object.defineProperties(x, {
   attach: {
     value: (...args) => {
       
+      decorateEl(document.body);
+      document.body.setStyles({
+        overflow: 'hidden',
+        height: '400px',
+        width: '800px',
+        cursor: 'none'
+      });
+      
+      let fragment = decorateEl(document.createDocumentFragment());
+      
       [...args].forEach((arg) => {
         
         if(arg.constructor === Array){
           arg.forEach((elem) => {
-            document.body.appendChild(elem);
+            fragment.append(elem);
           });
 
         } else {
-          document.body.appendChild(arg);
+          fragment.append(arg);
         }
       });
+      
+      document.body.appendChild(fragment);
       
       return args;
     }

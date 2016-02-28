@@ -42,17 +42,19 @@ export let OCM = Component((opts) => {
       .click(function(e){
         TweenMax.to(this, 0.3, containerStyles)
         this.publish('closeOCM', {})
+      });
+      
+  container.append(x
+    .ul
+      .setStyles({listStyle: 'none'})
+      .append(
+        items
+      )
+      .subscribe('openOCM', (el) => {
+        TweenMax.staggerFrom(items, 0.2, {x: -200}, 0.1);
       })
-      .append(x
-        .ul
-          .setStyles({listStyle: 'none'})
-          .append(
-            items
-          )
-          .subscribe('openOCM', (el) => {
-            TweenMax.staggerFrom(items, 0.2, {x: -200}, 0.1);
-          })
-      );
+  );
+      
   
   return x
     .output(

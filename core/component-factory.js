@@ -17,11 +17,12 @@ export let Component = (defaultConstructor) => {
       });
       
       return fragment; 
-    } else {
-      let comp          = defaultConstructor(opts);
-      comp.$constructor = Component.call(null, defaultConstructor);
-      
-      return comp;
     }
+ 
+    let comp          = defaultConstructor(opts);
+    comp.$constructor = Component.call(null, defaultConstructor);
+    
+    return comp;
+    
   }
 }

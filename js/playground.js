@@ -30,14 +30,21 @@ let ocmOpts = {
   items: ['item1', 'item2', 'item3', 'item4']
 }
 
-let weatherTile = Tile({ marginBottom: '10px', text: 'Weather' });
+let weatherTile = Tile({ marginBottom: '10px', text: 'Weather' })
+  .append(x
+    .img
+      .setSrc('../img/icon/cloud.svg')
+  );
+
+
 let weatherPane = Pane({backgroundColor: '#333'});
 
 weatherTile.mouseDown((el) => {
   // TweenMax.staggerFrom(tiles, 0.5, {opacity: 0, y:200, rotation: 360, scale:2}, 0.2);
   fetch('http://api.openweathermap.org/data/2.5/forecast?id=5809844&APPID=54d8527b214ab9b27a7a7ec7aee9efa0')
   .then((response)=>{
-    response.json().then((data) => {
+    response.json()
+    .then((data) => {
       el.publish('openWeather', data)
     });
   });

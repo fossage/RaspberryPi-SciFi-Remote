@@ -18,7 +18,8 @@ export let Pane = Component((opts) => {
     zIndex: '10',
     margin: '0',
     position: 'absolute',
-    bottom: '-485px'
+    bottom: '-485px',
+    display: 'none'
   }, opts);
   
   let wrapper = x
@@ -26,6 +27,7 @@ export let Pane = Component((opts) => {
     .setStyles(styles)
     .mouseDown((el) => {
       TweenMax.to(el, 0.2, styles);
+      el.publish('closePane', {});
     });
     
   let heading = x.h1;
@@ -34,9 +36,10 @@ export let Pane = Component((opts) => {
 
     wrapper.subscribe('openWeather', (e, data) => {
       TweenMax.to(wrapper, 0.2, {
-        bottom: 0
+        bottom: 0,
+        display: 'block'
       });
-      
+
       heading.text(data.cnt)
     });
     

@@ -83,7 +83,9 @@ export let decorateEl = (function() {
       
       setClass: {
         value: (...args) => {
-          el.classList.add(...args);
+          if(el.classList){
+            el.classList.add(...args);
+          }
           return el;
         }
       },
@@ -91,12 +93,14 @@ export let decorateEl = (function() {
       removeClass: {
         value: (...args) => {
           el.classList.remove(...args);
+          return el;
         }
       },
       
       toggleClass: {
         value: (className) => {
           el.classList.toggle(className);
+          return el;
         }
       },
 
