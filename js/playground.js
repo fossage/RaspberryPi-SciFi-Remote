@@ -10,28 +10,39 @@ let TweenMax = require('gsap');
 /*======== COMPONENT SETUP =======*/
 let tileOpts = [
   { 
-    marginBottom: '10px', 
     text: 'Weather', 
-    backgroundColor: 'RGB(0, 252, 250)',
-    boxShadow: '3px 3px 32px 3px RGB(0, 252, 250)'
+    backgroundColor: 'RGBA(0, 0, 0, 0.2)',
+    boxShadow: '3px 3px 32px 3px RGB(0, 252, 250)',
+    textShadow: '3px 2px 3px RGB(0, 252, 250)',
+    marginBottom: '10px',
+    opacity: '0.8'
   },
   {
     text: 'Tile',
-    backgroundColor: 'RGB(245, 244, 18)',
+    backgroundColor: 'RGBA(0, 0, 0, 0.2)',
     boxShadow: '3px 3px 32px 3px RGBA(245, 244, 18, 1)',
-    marginBottom: '10px'
+    textShadow: '3px 2px 3px RGBA(245, 244, 18, 1)',
+    color: 'RGBA(245, 244, 18, 1)',
+    marginBottom: '10px',
+    opacity: '0.8'
   },
   {
     text: 'Tile',
-    backgroundColor: 'rgba(125,243,54,1)',
+    backgroundColor: 'RGBA(0, 0, 0, 0.2)',
     boxShadow: '3px 3px 32px 3px rgba(125,243,54,1)',
-    marginBottom: '10px'
+    textShadow: '3px 2px 3px rgba(125,243,54,1)',
+    color: 'rgba(125,243,54,1)',
+    marginBottom: '10px',
+    opacity: '0.8'
   },
   {
     text: 'Tile',
-    backgroundColor: 'RGBA(246, 30, 214, 1)',
+    backgroundColor: 'RGBA(0, 0, 0, 0.2)',
     boxShadow: '3px 3px 32px 3px rgba(246,30,214,1)',
-    marginBottom: '10px'
+    textShadow: '3px 2px 3px rgba(246,30,214,1)',
+    color: 'rgba(246,30,214,1)',
+    marginBottom: '10px',
+    opacity: '0.8'
   }
 ];
 
@@ -41,9 +52,8 @@ let ocmOpts = {
 
 
 let weatherPane = Pane({backgroundColor: '#333'});
-let tiles = Tile(tileOpts);
+let tiles = x.div.append(Tile(tileOpts)).setStyles({display: 'flex', justifyContent: 'center', padding: '15px'});
 let ocm = OCM(ocmOpts);
-let ocmButton = OCMButton({width: '30px'});
 
 // let tl = new TweenMax.set(tiles.childNodes, {css:{transformPerspective:400, perspective:400, transformStyle:"preserve-3d"}});
 // TweenMax.fromTo(tiles.childNodes, .05, {css:{autoAlpha:0}}, {css:{autoAlpha:1}, immediateRender:true})
@@ -75,7 +85,6 @@ function getRandom(max, min){
 
 /*======== LINKAGE =======*/
 x.attach(
-  ocmButton,
   ocm,
   tiles,
   weatherPane
