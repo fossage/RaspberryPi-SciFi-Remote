@@ -18,7 +18,7 @@ let tileOpts = [
     opacity: '0.8'
   },
   {
-    text: 'Tile',
+    text: 'Movies',
     backgroundColor: 'RGBA(0, 0, 0, 0.2)',
     boxShadow: '3px 3px 32px 3px RGBA(245, 244, 18, 1)',
     textShadow: '3px 2px 3px RGBA(245, 244, 18, 1)',
@@ -27,7 +27,7 @@ let tileOpts = [
     opacity: '0.8'
   },
   {
-    text: 'Tile',
+    text: 'Music',
     backgroundColor: 'RGBA(0, 0, 0, 0.2)',
     boxShadow: '3px 3px 32px 3px rgba(125,243,54,1)',
     textShadow: '3px 2px 3px rgba(125,243,54,1)',
@@ -36,7 +36,7 @@ let tileOpts = [
     opacity: '0.8'
   },
   {
-    text: 'Tile',
+    text: 'Settings',
     backgroundColor: 'RGBA(0, 0, 0, 0.2)',
     boxShadow: '3px 3px 32px 3px rgba(246,30,214,1)',
     textShadow: '3px 2px 3px rgba(246,30,214,1)',
@@ -51,23 +51,61 @@ let ocmOpts = {
 }
 
 
+
+
 let weatherPane = Pane({backgroundColor: '#333'});
 let tiles = x.div.append(Tile(tileOpts)).setStyles({display: 'flex', justifyContent: 'center', padding: '15px'});
 let ocm = OCM(ocmOpts);
 
-// let tl = new TweenMax.set(tiles.childNodes, {css:{transformPerspective:400, perspective:400, transformStyle:"preserve-3d"}});
-// TweenMax.fromTo(tiles.childNodes, .05, {css:{autoAlpha:0}}, {css:{autoAlpha:1}, immediateRender:true})
-//   .to(tiles.childNodes, 0.3, {css:{rotationY:30, rotationX:20}})
-//   .add("z", "+=0.2");
+function runCenterDot(xfrom, xto, time){
+  let dot1 = x.div.setStyles({
+    border: '1px solid RGB(216, 254, 254)',
+    borderRadius: '8px',
+    backgroundColor: 'RGB(216, 254, 254)',
+    boxShadow: '3px 3px 32px 3px RGB(216, 254, 254)',
+    position: 'absolute'
+  });
   
-// tiles.childNodes.forEach(function (index, element) {
-//   TweenMax.to(element, 0.2, {css:{z:getRandom(-50, 50)}}, "z"); //place each z-tween of each box at the label "z"
-// });
+  document.body.appendChild(dot1);
+  TweenMax.fromTo(dot1, time, {
+    y: 250, 
+    x: xfrom,
+    height: 20, 
+    width: 20, 
+    borderRadius: 12
+  }, 
+  {
+    y: 20,
+    x: xto, 
+    height: 0, 
+    width: 0,  
+    borderRadius: 6,
+    onComplete: () => { dot1.setStyles({display: 'none'}); document.body.removeChild(dot1);}
+  });
+}
 
-// tiles.childNodes.forEach(function (index, element) {
-//   tl.constructor.to(element, 1, {css:{z:200, backgroundColor:Math.random() * 0xffffff, rotationX:getRandom(-360, 600), rotationY:getRandom(-360, -600), autoAlpha:0}}, "explode");
-// }) ;
+  dotRunner(50, 355);
+  dotRunner(205, 375);
+  dotRunner(383, 390);
+  dotRunner(550, 410);
+  dotRunner(715, 428);
 
+setInterval(() => {
+  dotRunner(50, 355);
+  dotRunner(205, 375);
+  dotRunner(383, 390);
+  dotRunner(550, 410);
+  dotRunner(715, 428);
+}, 10000);
+
+function dotRunner(xfrom, xto) {
+  let num = getRandom(2, 10) * 1000;
+  let num2 = getRandom(8, 22);
+  let clear = setTimeout(() => {
+    runCenterDot(xfrom, xto, num2);
+    clearTimeout(clear);
+  }, num);
+}
 
 tiles.childNodes[0].click((el) => {
   fetch('http://api.openweathermap.org/data/2.5/forecast?id=5809844&APPID=54d8527b214ab9b27a7a7ec7aee9efa0&units=imperial')
