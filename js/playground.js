@@ -6,6 +6,7 @@ import {OCMButton} from '../components/ocm-button'
 import {Pane} from '../components/pane';
 
 let TweenMax = require('gsap');
+const electron = require('electron');
 
 /*======== COMPONENT SETUP =======*/
 let tileOpts = [
@@ -50,7 +51,7 @@ let ocmOpts = {
   items: ['item1', 'item2', 'item3', 'item4']
 }
 
-
+let size = electron.screen.getPrimaryDisplay().workAreaSize;
 
 
 let weatherPane = Pane({backgroundColor: '#333'});
@@ -68,34 +69,34 @@ function runCenterDot(xfrom, xto, time){
   
   document.body.appendChild(dot1);
   TweenMax.fromTo(dot1, time, {
-    y: 250, 
+    y: 280, 
     x: xfrom,
     height: 20, 
     width: 20, 
     borderRadius: 12
   }, 
   {
-    y: 20,
+    y: 2,
     x: xto, 
-    height: 0, 
-    width: 0,  
+    height: 1, 
+    width: 1,  
     borderRadius: 6,
     onComplete: () => { dot1.setStyles({display: 'none'}); document.body.removeChild(dot1);}
   });
 }
 
-  dotRunner(50, 355);
-  dotRunner(205, 375);
-  dotRunner(383, 390);
-  dotRunner(550, 410);
-  dotRunner(715, 428);
+function runAll(){
+  dotRunner(-25, 335);
+  dotRunner(165, 352);
+  dotRunner(358, 366);
+  dotRunner(550, 380);
+  dotRunner(740, 400);
+}
+
+runAll();
 
 setInterval(() => {
-  dotRunner(50, 355);
-  dotRunner(205, 375);
-  dotRunner(383, 390);
-  dotRunner(550, 410);
-  dotRunner(715, 428);
+  runAll();
 }, 10000);
 
 function dotRunner(xfrom, xto) {
@@ -106,6 +107,14 @@ function dotRunner(xfrom, xto) {
     clearTimeout(clear);
   }, num);
 }
+
+let dimmer = x.div.setStyles({
+  height: '480px',
+  width: '800px',
+  position: 'absolute',
+  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  opacity: '0.6'
+});
 
 tiles.childNodes[0].click((el) => {
   fetch('http://api.openweathermap.org/data/2.5/forecast?id=5809844&APPID=54d8527b214ab9b27a7a7ec7aee9efa0&units=imperial')
@@ -123,6 +132,7 @@ function getRandom(max, min){
 
 /*======== LINKAGE =======*/
 x.attach(
+  dimmer,
   ocm,
   tiles,
   weatherPane
