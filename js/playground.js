@@ -6,6 +6,7 @@ import {OCMButton} from '../components/ocm-button'
 import {Pane} from '../components/pane';
 
 let TweenMax = require('gsap');
+const electron = require('electron');
 
 /*======== COMPONENT SETUP =======*/
 let tileOpts = [
@@ -78,6 +79,7 @@ weatherPane.subscribe('weatherLoaded', (e, data) => {
 
 
 let tileFragment =  Tile(tileOpts);
+// let size = electron.screen.getPrimaryDisplay().workAreaSize;
 
 [...tileFragment.childNodes].forEach((node, idx) => {
   let tm;
@@ -93,14 +95,6 @@ let tileFragment =  Tile(tileOpts);
 })
 
 let tiles = x.div.append(tileFragment).setStyles({display: 'flex', justifyContent: 'center', padding: '15px'});
-let ocm = OCM(ocmOpts);
-let dimmer = x.div.setStyles({height: '480px', width: '800px', position: 'absolute', backgroundColor: '#000', opacity: '0.3'});
-
-
-runAllDots();
-setInterval(() => {
-  runAllDots();
-}, 10000);
 
 tiles.childNodes[0].click((el) => {
   el.publish('openPane', {});
@@ -114,13 +108,20 @@ tiles.childNodes[0].click((el) => {
   });
 });
 
+let dimmer = x.div.setStyles({
+  height: '480px',
+  width: '800px',
+  position: 'absolute',
+  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  opacity: '0.6'
+});
+
 
 
 /*======== LINKAGE =======*/
 x.attach(
   dimmer,
   weatherPane,
-  ocm,
   tiles
 );
  
@@ -150,21 +151,35 @@ function runDot(xfrom, xto, time){
   
   document.body.appendChild(dot1);
   TweenMax.fromTo(dot1, time, {
-    y: 250, 
-    left: xfrom,
+    y: 280, 
+    x: xfrom,
     height: 20, 
     width: 20, 
     borderRadius: 12
   }, 
   {
-    y: 20,
-    left: xto, 
-    height: 0, 
-    width: 0,  
+    y: 2,
+    x: xto, 
+    height: 1, 
+    width: 1,  
     borderRadius: 6,
     onComplete: () => { dot1.setStyles({display: 'none'}); document.body.removeChild(dot1);}
   });
 }
+
+function runAll(){
+  dotRunner(-25, 335);
+  dotRunner(165, 352);
+  dotRunner(358, 366);
+  dotRunner(550, 380);
+  dotRunner(740, 400);
+}
+
+runAll();
+
+setInterval(() => {
+  runAll();
+}, 10000);
 
 function dotRunner(xfrom, xto) {
   let num = getRandom(2, 10) * 1000;
@@ -174,4 +189,12 @@ function dotRunner(xfrom, xto) {
     clearTimeout(clear);
   }, num);
 }
-	
+
+function getRandom(max, min){
+  return Math.floor(Math.random() * (1 + max - min) + min);
+}	
+
+ 
+// registerComponent('my-list', '#list', '#mydiv').subscribe('alertfired', function(e){ this.innerHTML = '<ul><li>Fifth Thing</li><li>Fourth Thing</li><li>Third Thing</li><li>Second Thing</li><li>First Thing</li></ul>'; });
+// registerComponent('my-alert', '#alert', '#my-alert').click(el => el.publish('alertfired'));
+

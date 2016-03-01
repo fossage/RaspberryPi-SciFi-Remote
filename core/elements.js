@@ -1,6 +1,9 @@
 'use strict';
 
 import {decorateEl, createEl} from './dum';
+const electron = require('electron');
+
+let size = electron.screen.getPrimaryDisplay().workAreaSize;
 
 export let x = {};
 Object.defineProperties(x, {
@@ -10,11 +13,12 @@ Object.defineProperties(x, {
       decorateEl(document.body);
       document.body.setStyles({
         overflow: 'hidden',
-        height: '400px',
-        width: '800px',
+        height: `${size.height}px`,
+        width: `${size.width}px`,
         backgroundImage: 'url("./img/background/80s.jpg")',
         backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat'
+        backgroundRepeat: 'no-repeat',
+	cursor: 'none'
       });
       
       let fragment = decorateEl(document.createDocumentFragment());

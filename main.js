@@ -18,9 +18,11 @@ let mainWindow;
 function createWindow () {
   // Create the browser window.
  
+  let size = electron.screen.getPrimaryDisplay().workAreaSize;
+
   mainWindow = new BrowserWindow({ 
-    width: 800,
-    height: 480, 
+    width: size.width,
+    height: size.heigth, 
     icon: './img/sloth.jpg',
     skipTaskbar: true,
     autoHideMenuBar: true,
@@ -36,7 +38,7 @@ function createWindow () {
   onlineStatusWindow.loadURL('file://' + __dirname + 'public/online-status.html');
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+ // mainWindow.webContents.openDevTools();
   
   
   // Emitted when the window is closed.
