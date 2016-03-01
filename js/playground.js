@@ -50,14 +50,96 @@ let ocmOpts = {
   items: ['item1', 'item2', 'item3', 'item4']
 }
 
+let weatherPane = Pane({color: 'RGB(255, 21, 30)', padding: '15px'});
+let wtl;
+
+weatherPane.subscribe('openWeather', () => {
+  wtl = TweenMax.to(weatherPane, 1.4, {y: 235, delay: 0.6});
+})
+.click(() => {
+  weatherPane.publish('closePane', {});
+  wtl.reverse();
+  
+  wtl.eventCallback('onReverseComplete', () => {      
+    [...weatherPane.childNodes].forEach((node) => { weatherPane.removeChild(node); });
+  });
+});
+
+let weatherInner = 
+
+weatherPane.subscribe('weatherLoaded', (e, data) => {
+  weatherPane.append(
+    x.h1.text('Current Weather').setClass('blade'), 
+    x.hr,
+    x.h1.text(`${data.main.temp}ºF`).setClass('blade'),
+    x.h3.text(data.weather[0].description).setClass('blade')
+  )
+});
 
 
+let tileFragment =  Tile(tileOpts);
 
-let weatherPane = Pane({backgroundColor: '#333'});
-let tiles = x.div.append(Tile(tileOpts)).setStyles({display: 'flex', justifyContent: 'center', padding: '15px'});
+[...tileFragment.childNodes].forEach((node, idx) => {
+  let tm;
+  let amount = idx < 2 ? -700 : 700;
+  
+  node.subscribe('openPane', () => {
+    tm = TweenMax.to(node, 2, {x: amount})
+  });
+  
+  node.subscribe('closePane', () => {
+    tm.reverse();
+  });
+})
+
+let tiles = x.div.append(tileFragment).setStyles({display: 'flex', justifyContent: 'center', padding: '15px'});
 let ocm = OCM(ocmOpts);
+let dimmer = x.div.setStyles({height: '480px', width: '800px', position: 'absolute', backgroundColor: '#000', opacity: '0.3'});
 
-function runCenterDot(xfrom, xto, time){
+
+runAllDots();
+setInterval(() => {
+  runAllDots();
+}, 10000);
+
+tiles.childNodes[0].click((el) => {
+  el.publish('openPane', {});
+  el.publish('openWeather', {})
+  fetch('http://api.openweathermap.org/data/2.5/weather?id=5809844&APPID=54d8527b214ab9b27a7a7ec7aee9efa0&units=imperial')
+  .then((response)=>{
+    response.json()
+    .then((data) => {
+      el.publish('weatherLoaded', data)
+    });
+  });
+});
+
+
+
+/*======== LINKAGE =======*/
+x.attach(
+  dimmer,
+  weatherPane,
+  ocm,
+  tiles
+);
+ 
+// registerComponent('my-list', '#list', '#mydiv').subscribe('alertfired', function(e){ this.innerHTML = '<ul><li>Fifth Thing</li><li>Fourth Thing</li><li>Third Thing</li><li>Second Thing</li><li>First Thing</li></ul>'; });
+// registerComponent('my-alert', '#alert', '#my-alert').click(el => el.publish('alertfired'));
+
+function runAllDots(){
+  dotRunner(50, 355);
+  dotRunner(205, 375);
+  dotRunner(383, 390);
+  dotRunner(550, 410);
+  dotRunner(715, 428);
+}
+
+function getRandom(max, min){
+  return Math.floor(Math.random() * (1 + max - min) + min);
+}
+
+function runDot(xfrom, xto, time){
   let dot1 = x.div.setStyles({
     border: '1px solid RGB(216, 254, 254)',
     borderRadius: '8px',
@@ -69,14 +151,14 @@ function runCenterDot(xfrom, xto, time){
   document.body.appendChild(dot1);
   TweenMax.fromTo(dot1, time, {
     y: 250, 
-    x: xfrom,
+    left: xfrom,
     height: 20, 
     width: 20, 
     borderRadius: 12
   }, 
   {
     y: 20,
-    x: xto, 
+    left: xto, 
     height: 0, 
     width: 0,  
     borderRadius: 6,
@@ -84,49 +166,12 @@ function runCenterDot(xfrom, xto, time){
   });
 }
 
-  dotRunner(50, 355);
-  dotRunner(205, 375);
-  dotRunner(383, 390);
-  dotRunner(550, 410);
-  dotRunner(715, 428);
-
-setInterval(() => {
-  dotRunner(50, 355);
-  dotRunner(205, 375);
-  dotRunner(383, 390);
-  dotRunner(550, 410);
-  dotRunner(715, 428);
-}, 10000);
-
 function dotRunner(xfrom, xto) {
   let num = getRandom(2, 10) * 1000;
   let num2 = getRandom(8, 22);
   let clear = setTimeout(() => {
-    runCenterDot(xfrom, xto, num2);
+    runDot(xfrom, xto, num2);
     clearTimeout(clear);
   }, num);
 }
-
-tiles.childNodes[0].click((el) => {
-  fetch('http://api.openweathermap.org/data/2.5/forecast?id=5809844&APPID=54d8527b214ab9b27a7a7ec7aee9efa0&units=imperial')
-  .then((response)=>{
-    response.json()
-    .then((data) => {
-      el.publish('openWeather', data)
-    });
-  });
-});
-
-function getRandom(max, min){
-  return Math.floor(Math.random() * (1 + max - min) + min);
-}	
-
-/*======== LINKAGE =======*/
-x.attach(
-  ocm,
-  tiles,
-  weatherPane
-);
- 
-// registerComponent('my-list', '#list', '#mydiv').subscribe('alertfired', function(e){ this.innerHTML = '<ul><li>Fifth Thing</li><li>Fourth Thing</li><li>Third Thing</li><li>Second Thing</li><li>First Thing</li></ul>'; });
-// registerComponent('my-alert', '#alert', '#my-alert').click(el => el.publish('alertfired'));
+	

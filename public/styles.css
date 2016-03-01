@@ -1,10 +1,19 @@
 @font-face {
-  font-family: rad ;
+  font-family: tron;
   src: url(./fonts/Tr2n.ttf);
 }
 
+@font-face{
+  font-family: bladeRunner;
+  src: url(./fonts/BLADRMF_.TTF)
+}
+
 * {
-  font-family: rad;
+  font-family: tron;
+}
+
+.blade {
+  font-family: bladeRunner;
 }
 
 .highlighted {
