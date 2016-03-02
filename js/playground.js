@@ -5,7 +5,8 @@ import {OCM} from '../components/ocm';
 import {OCMButton} from '../components/ocm-button'
 import {Pane} from '../components/pane';
 
-let TweenMax = require('gsap');
+const TweenMax = require('gsap');
+//const gpio = require('pi-gpio');
 const electron = require('electron');
 
 /*======== COMPONENT SETUP =======*/
@@ -55,7 +56,7 @@ let weatherPane = Pane({color: 'RGB(255, 21, 30)', padding: '15px'});
 let wtl;
 
 weatherPane.subscribe('openWeather', () => {
-  wtl = TweenMax.to(weatherPane, 1.4, {y: 235, delay: 0.6});
+  wtl = TweenMax.to(weatherPane, 1.4, {y: 220, delay: 0.6});
 })
 .click(() => {
   weatherPane.publish('closePane', {});

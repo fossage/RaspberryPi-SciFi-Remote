@@ -1,5 +1,6 @@
 'use strict';
 
+let  gpio = require('rpi-gpio');
 const electron = require('electron');
 const app = electron.app;
 // Module to control application life.
@@ -30,6 +31,20 @@ function createWindow () {
     backgroundColor: '#BDF4DE'
   });
 
+  gpio.setup(15, gpio.DIR_OUT, write(15));
+  gpio.setup(11, gpio.DIR_OUT, write(11));
+  
+
+  function write(pin) {
+    return () => {
+      gpio.write(pin, true, function(err){
+        if(err) throw err;
+        console.log('Pin 13');
+      });
+    }
+  }
+
+
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/public/index.html');
   mainWindow.setFullScreen(true);
@@ -38,11 +53,12 @@ function createWindow () {
   onlineStatusWindow.loadURL('file://' + __dirname + 'public/online-status.html');
 
   // Open the DevTools.
- // mainWindow.webContents.openDevTools();
+ mainWindow.webContents.openDevTools();
   
   
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
+    gpio.destroy();
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
