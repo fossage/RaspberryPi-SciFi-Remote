@@ -1,6 +1,6 @@
 'use strict';
 
-let  gpio = require('rpi-gpio');
+const os = require('os');
 const electron = require('electron');
 const app = electron.app;
 // Module to control application life.
@@ -8,9 +8,9 @@ const app = electron.app;
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
 
-var onlineStatusWindow;
 const ipcMain = electron.ipcMain;
 const dialog = require('electron').dialog;
+let pi = os.arch() === 'arm';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -22,8 +22,8 @@ function createWindow () {
   let size = electron.screen.getPrimaryDisplay().workAreaSize;
 
   mainWindow = new BrowserWindow({ 
-    width: size.width,
-    height: size.heigth, 
+    width: pi ? size.width : 700,
+    height: pi? size.heigth : 400, 
     icon: './img/sloth.jpg',
     skipTaskbar: true,
     autoHideMenuBar: true,
@@ -31,34 +31,39 @@ function createWindow () {
     backgroundColor: '#BDF4DE'
   });
 
-  gpio.setup(15, gpio.DIR_OUT, write(15));
-  gpio.setup(11, gpio.DIR_OUT, write(11));
-  
+  if(pi) {
+    let gpio = require('rpi-gpio');
+    
+    gpio.setup(15, gpio.DIR_OUT, write(15));
+    gpio.setup(11, gpio.DIR_OUT, write(11));
+    
 
-  function write(pin) {
-    return () => {
-      gpio.write(pin, true, function(err){
-        if(err) throw err;
-        console.log('Pin 13');
-      });
+    function write(pin) {
+      return () => {
+        gpio.write(pin, true, function(err){
+          if(err) throw err;
+          console.log('Pin 13');
+        });
+      }
     }
   }
 
 
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/public/index.html');
-  mainWindow.setFullScreen(true);
-  
-  onlineStatusWindow = new BrowserWindow({ width: 0, height: 0, show: false });
-  onlineStatusWindow.loadURL('file://' + __dirname + 'public/online-status.html');
 
-  // Open the DevTools.
- mainWindow.webContents.openDevTools();
+  if(pi) {
+    mainWindow.setFullScreen(true);
+    mainWindow.webContents.openDevTools(); 
+  }
+ 
   
   
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
-    gpio.destroy();
+    if(pi){
+      gpio.destroy();
+    }
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.

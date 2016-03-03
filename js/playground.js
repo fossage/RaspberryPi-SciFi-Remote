@@ -1,9 +1,9 @@
 import {registerComponent} from '../core/dum';
 import {x} from '../core/elements';
-import {Tile} from '../components/basic-tile';
-import {OCM} from '../components/ocm';
-import {OCMButton} from '../components/ocm-button'
-import {Pane} from '../components/pane';
+import {Tile} from '../component-templates/basic-tile';
+import {OCM} from '../component-templates/ocm';
+import {OCMButton} from '../component-templates/ocm-button'
+import {Pane} from '../component-templates/pane';
 
 const TweenMax = require('gsap');
 //const gpio = require('pi-gpio');

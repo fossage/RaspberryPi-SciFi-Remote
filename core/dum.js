@@ -1,5 +1,7 @@
 'use strict';
 
+let TweenMax = require('gsap');
+
 export function registerComponent(elementName, templateId, shadowHost) {
   let CustomElement   = document.registerElement(elementName);
   let link            = document.querySelector(`link[rel="import"]${templateId}-comp`);
@@ -36,6 +38,30 @@ export let decorateEl = (function() {
       
       click: {
         value: _setUpHandler('click', el)
+      },
+      
+      to: {
+        value: TweenMax.to
+      },
+      
+      from: {
+        value: TweenMax.from
+      },
+      
+      fromTo: {
+        value: TweenMax.fromTo
+      },
+      
+      staggerFrom: {
+        value: TweenMax.staggerFrom
+      },
+      
+      staggerTo: {
+        value: TweenMax.staggerTo
+      },
+      
+      staggerFromTo: {
+        value: TweenMax.staggerFromTo
       },
       
       mouseDown: {
@@ -76,7 +102,7 @@ export let decorateEl = (function() {
       
       remove: {
         value: () => {
-          let parent = el.parent;
+          let parent = el.parent || document.body;
           return parent.removeChild(el);
         }
       },
