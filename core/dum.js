@@ -41,11 +41,11 @@ export let decorateEl = (function() {
       },
       
       to: {
-        value: _setUpSingleAnimation(el)
+        value: _setUpSingleAnimation(el, 'to')
       },
       
       from: {
-        value: _setUpSingleAnimation(el)
+        value: _setUpSingleAnimation(el, 'from')
       },
       
       fromTo: {
@@ -228,14 +228,20 @@ function _setUpHandler(name, el) {
   };
 }
 
-function _setUpSingleAnimation(el) {
+function _setUpSingleAnimation(el, type) {
   let currentAnimation = {duration: null, vars: null};
   
   return (duration, vars) => {
-    
-    if(duration !== currentAnimation.duration || !Object.is(vars, currentAnimation.vars)) {
-      let timeLine = TweenMax.to(el, duration, vars);
-      if(!el.animation) { el.animation = timeLine; }
+    if(el.animation && !el.animation._reversed) {
+      el.animation.reverse();
+      Object.assign(el, 'to', {
+        value: TweenMax[type].bind(TweenMax, el, duration, vars),
+        writable: false,
+        configurable: true
+      });
+    } else if((el.animation && el.animation._reversed) || duration !== currentAnimation.duration || !Object.is(vars, currentAnimation.vars)) {
+      let timeLine = TweenMax[type](el, duration, vars);
+      el.animation = timeLine; 
     }
     
     return el;

@@ -8,7 +8,7 @@ let wtl;
 weatherPane.subscribe('openWeather', () => {
   weatherPane.to(1.4, {y: 220, delay: 0.6});
 })
-.mouseUp((el) => {
+.mouseDown((el) => {
   el.animation.reverse();
   
   el.animation.eventCallback('onReverseComplete', () => {      
