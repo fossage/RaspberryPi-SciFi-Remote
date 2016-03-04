@@ -1,5 +1,5 @@
 import {x} from '../core/elements';
-import {Tile} from '../component-templates/basic-tile';
+import {Tile} from '../component-templates/tile';
 
 let tileOpts = [
   { 
@@ -46,11 +46,11 @@ let tileFragment =  Tile(tileOpts);
   let amount = idx < 2 ? -700 : 700;
   
   node.subscribe('openPane', () => {
-    tm = node.to(node, 2, {x: amount})
+    node.to(2, {x: amount})
   });
   
   node.subscribe('closePane', () => {
-    tm.reverse();
+    node.animation.reverse();
   });
 })
 

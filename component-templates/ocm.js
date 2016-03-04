@@ -35,12 +35,12 @@ export let OCM = Component((opts) => {
     .div
       .setStyles(containerStyles)
       .subscribe('openOCM', function(e){
-        TweenMax.to(this, 0.3, {
+        container.to(0.3, {
           left: 0
         });
       })
       .click(function(e){
-        TweenMax.to(this, 0.3, containerStyles)
+        container.to(0.3, containerStyles)
         this.publish('closeOCM', {})
       });
       

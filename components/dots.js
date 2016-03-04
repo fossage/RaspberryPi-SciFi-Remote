@@ -19,7 +19,8 @@ function runDot(xfrom, xto, time){
   });
   
   document.body.appendChild(dot1);
-  TweenMax.fromTo(dot1, time, {
+  dot1.fromTo(time, 
+  {
     y: 280, 
     x: xfrom,
     height: 20, 
@@ -32,7 +33,10 @@ function runDot(xfrom, xto, time){
     height: 1, 
     width: 1,  
     borderRadius: 6,
-    onComplete: () => { dot1.setStyles({display: 'none'}); document.body.removeChild(dot1);}
+    onComplete: () => { 
+      dot1.setStyles({display: 'none'}); 
+      dot1.remove();
+    }
   });
 }
 

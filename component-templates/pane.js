@@ -25,19 +25,13 @@ export let Pane = Component((opts) => {
     .div
     .setStyles(styles)
     .mouseDown((el) => {
-      TweenMax.to(el, 0.2, styles);
+      wrapper.to(0.2, styles);
       el.publish('closePane', {});
     });
     
   let heading = x.h1;
   
   wrapper.append(heading);
-
-  // if(opts.subscribeTo) {
-  //   wrapper.subscribeTo(opts.subscribeTo.event, (e, data) => {
-  //     TweenMax.to(wrapper, 0.3, {bottom: 0});
-  //   });
-  // }
   
   return wrapper;
   

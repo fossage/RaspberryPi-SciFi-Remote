@@ -6,14 +6,13 @@ export let weatherPane = Pane({color: 'RGB(255, 21, 30)', padding: '15px'});
 let wtl;
 
 weatherPane.subscribe('openWeather', () => {
-  wtl = weatherPane.to(weatherPane, 1.4, {y: 220, delay: 0.6});
+  weatherPane.to(1.4, {y: 220, delay: 0.6});
 })
-.click(() => {
-  weatherPane.publish('closePane', {});
-  wtl.reverse();
+.mouseUp((el) => {
+  el.animation.reverse();
   
-  wtl.eventCallback('onReverseComplete', () => {      
-    [...weatherPane.childNodes].forEach((node) => { weatherPane.removeChild(node); });
+  el.animation.eventCallback('onReverseComplete', () => {      
+    [...el.childNodes].forEach((node) => { node.remove(); });
   });
 });
 

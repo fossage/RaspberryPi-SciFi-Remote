@@ -18,7 +18,7 @@ Object.defineProperties(x, {
         backgroundImage: 'url("./img/background/80s.jpg")',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
-	cursor: 'none'
+	      cursor: 'none'
       });
       
       let fragment = decorateEl(document.createDocumentFragment());

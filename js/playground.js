@@ -1,8 +1,8 @@
 import {x} from '../core/elements';
-import {dimmer} from '../components/dimmer';
 import {dots} from '../components/dots';
-import {mainControlTiles} from '../components/main-control-tiles';
+import {dimmer} from '../components/dimmer';
 import {weatherPane} from '../components/weather-pane';
+import {mainControlTiles} from '../components/main-control-tiles';
 
 /*======== COMPONENT SETUP =======*/
 dots();
@@ -13,7 +13,5 @@ x.attach(
   weatherPane,
   mainControlTiles
 );
- 
-/*======== MISC =======*/
 
 

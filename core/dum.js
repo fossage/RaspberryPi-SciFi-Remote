@@ -41,29 +41,19 @@ export let decorateEl = (function() {
       },
       
       to: {
-        value: TweenMax.to
+        value: _setUpSingleAnimation(el)
       },
       
       from: {
-        value: TweenMax.from
+        value: _setUpSingleAnimation(el)
       },
       
       fromTo: {
-        value: TweenMax.fromTo
+        value: (duration, fromVars, toVars) => {
+          return TweenMax.fromTo(el, duration, fromVars, toVars);
+        }
       },
-      
-      staggerFrom: {
-        value: TweenMax.staggerFrom
-      },
-      
-      staggerTo: {
-        value: TweenMax.staggerTo
-      },
-      
-      staggerFromTo: {
-        value: TweenMax.staggerFromTo
-      },
-      
+
       mouseDown: {
         value: _setUpHandler('mouseDown', el)
       },
@@ -102,7 +92,7 @@ export let decorateEl = (function() {
       
       remove: {
         value: () => {
-          let parent = el.parent || document.body;
+          let parent = el.parentNode || document.body;
           return parent.removeChild(el);
         }
       },
@@ -221,14 +211,53 @@ export let decorateEl = (function() {
              PRIVATE FUNCTIONS 
 ===========================================*/
 function _setUpHandler(name, el) {
+  let callbacks = [];
   return (cb) => {
     if (typeof cb !== 'function') {
       throw new TypeError(`Argument to ${name} must be a function`);
     }
     
     let domName = `on${name.toLowerCase()}`;
-    el[domName] = cb.bind(el, el);
+    callbacks = callbacks.concat([(cb.bind(el, el))]);
+
+    el[domName] = () => {
+      callbacks.forEach((cb) => { cb(); });
+    }
     
     return el;
   };
+}
+
+function _setUpSingleAnimation(el) {
+  let currentAnimation = {duration: null, vars: null};
+  
+  return (duration, vars) => {
+    
+    if(duration !== currentAnimation.duration || !Object.is(vars, currentAnimation.vars)) {
+      let timeLine = TweenMax.to(el, duration, vars);
+      if(!el.animation) { el.animation = timeLine; }
+    }
+    
+    return el;
+  }
+}
+
+function _setUpGroupAnimation(el) {
+  let currentAnimation = {duration: null, fromVars: null, toVars: null};
+  
+  return (duration, fromVars, toVars) => {
+    
+    if(duration !== currentAnimation.duration 
+      || !Object.is(fromVars, currentAnimation.fromVars) 
+      || !Object.is(toVars, currentAnimation.toVars)) 
+    {
+      
+      let timeLine = TweenMax.fromTo(el, duration, fromVars, toVars);
+      
+      if (!el.animation) { el.animation = timeLine };  
+      
+    }
+    
+    return el;
+  }
 }
