@@ -16,7 +16,7 @@
   "author": "Justin Foss",
   "license": "CC0-1.0",
   "dependencies": {
-    "electron-prebuilt": "^0.36.0",
+    "electron-prebuilt": "^0.36.10",
     "epoll": "^0.1.17",
     "pi-gpio": "0.0.8",
     "rpi-gpio": "^0.7.0"

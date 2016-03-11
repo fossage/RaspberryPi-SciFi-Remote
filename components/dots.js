@@ -4,7 +4,7 @@ import {getRandom} from '../utils/number-utils'
 function runAllDots(){
   dotRunner(50, 355);
   dotRunner(205, 375);
-  dotRunner(383, 390);
+  dotRunner(395, 420);
   dotRunner(550, 410);
   dotRunner(715, 428);
 }
@@ -21,14 +21,14 @@ function runDot(xfrom, xto, time){
   document.body.appendChild(dot1);
   dot1.fromTo(time, 
   {
-    y: 280, 
+    y: 270, 
     x: xfrom,
     height: 20, 
     width: 20, 
     borderRadius: 12
   }, 
   {
-    y: 2,
+    y: 18,
     x: xto, 
     height: 1, 
     width: 1,  
@@ -41,11 +41,11 @@ function runDot(xfrom, xto, time){
 }
 
 function runAll(){
-  dotRunner(-25, 335);
-  dotRunner(165, 352);
-  dotRunner(358, 366);
-  dotRunner(550, 380);
-  dotRunner(740, 400);
+  dotRunner(18, 357);
+  dotRunner(200, 374);
+  dotRunner(380, 390);
+  dotRunner(560, 408);
+  dotRunner(738, 425);
 }
 
 function dotRunner(xfrom, xto) {

@@ -36,11 +36,11 @@ export let Tile = Component((opts) => {
     .div
       .setClass('tile-inner')
       .setStyles(styles)
-      .mouseDown(function(el){
+      .touchStart(function(el){
         this.setStyles(mouseDownStyles);
         this.publish('tileDepressed', {});
       })
-      .mouseUp(function(el){
+      .touchEnd(function(el){
         this.setStyles(styles);
         this.publish('tileReleased', {});
       });

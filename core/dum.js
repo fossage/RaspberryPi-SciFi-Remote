@@ -36,6 +36,14 @@ export let decorateEl = (function() {
         value: ++uid
       },
       
+      touchStart: {
+        value: _setUpHandler('touchstart', el)
+      },
+
+      touchEnd: {
+        value: _setUpHandler('touchend', el)
+      },
+      
       click: {
         value: _setUpHandler('click', el)
       },

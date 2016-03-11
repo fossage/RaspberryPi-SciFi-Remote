@@ -6,9 +6,9 @@ export let weatherPane = Pane({color: 'RGB(255, 21, 30)', padding: '15px'});
 let wtl;
 
 weatherPane.subscribe('openWeather', () => {
-  weatherPane.to(1.4, {y: 220, delay: 0.6});
+  weatherPane.to(1.4, {y: 235, delay: 0.6});
 })
-.mouseDown((el) => {
+.touchStart((el) => {
   el.animation.reverse();
   
   el.animation.eventCallback('onReverseComplete', () => {      

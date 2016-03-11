@@ -24,7 +24,7 @@ export let Pane = Component((opts) => {
   let wrapper = x
     .div
     .setStyles(styles)
-    .mouseDown((el) => {
+    .touchStart((el) => {
       wrapper.to(0.2, styles);
       el.publish('closePane', {});
     });

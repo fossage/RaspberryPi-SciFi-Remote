@@ -14,16 +14,16 @@ let pi = os.arch() === 'arm';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow;
+var mainWindow;
+
 
 function createWindow () {
   // Create the browser window.
- 
   let size = electron.screen.getPrimaryDisplay().workAreaSize;
 
   mainWindow = new BrowserWindow({ 
-    width: pi ? size.width : 700,
-    height: pi? size.heigth : 400, 
+    width: pi ? size.width : 800,
+    height: pi? size.heigth : 480, 
     icon: './img/sloth.jpg',
     skipTaskbar: true,
     autoHideMenuBar: true,
@@ -32,11 +32,29 @@ function createWindow () {
   });
 
   if(pi) {
-    let gpio = require('rpi-gpio');
+    var gpio = require('rpi-gpio');
     
-    gpio.setup(15, gpio.DIR_OUT, write(15));
-    gpio.setup(11, gpio.DIR_OUT, write(11));
-    
+    ipcMain.on('purple', () => {    
+      gpio.destroy();
+      gpio.setup(15, gpio.DIR_OUT, write(15));
+      gpio.setup(11, gpio.DIR_OUT, write(11));
+    });
+
+    ipcMain.on('green', () => {
+      gpio.destroy();
+      gpio.setup(13, gpio.DIR_OUT, write(13));
+    });
+
+    ipcMain.on('blue', () => {
+      gpio.destroy();
+      gpio.setup(15, gpio.DIR_OUT, write(15));
+    });
+
+    ipcMain.on('yellow', () => {
+      gpio.destroy();
+      gpio.setup(11, gpio.DIR_OUT, write(11));
+      gpio.setup(13, gpio.DIR_OUT, write(13));
+    });
 
     function write(pin) {
       return () => {
@@ -70,10 +88,6 @@ function createWindow () {
     mainWindow = null;
   });
 }
-
-ipcMain.on('online-status-changed', function(event, status) {
-  console.log(status);
-});
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
