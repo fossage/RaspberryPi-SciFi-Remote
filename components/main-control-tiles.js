@@ -48,7 +48,7 @@ function tiles(){
     let tm;
     let amount = idx < 2 ? -700 : 700;
   
-    node.subscribe('openPane', () => {
+    node.subscribe('openWeather', () => {
       node.to(2, {x: amount})
     });
 
@@ -67,8 +67,8 @@ function tiles(){
     });
 
   mainControlTiles.childNodes[1].touchEnd((el) => {
-    el.publish('openPane', {});
     el.publish('openPlexRemote', {});
+    el.publish('openPane', {});
     renderer.send('yellow', {});
   });
 

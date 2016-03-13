@@ -2,8 +2,13 @@
 
 import {decorateEl, createEl} from './dum';
 const electron = require('electron');
+const renderer = require('electron').ipcRenderer; 
 
 let size = electron.screen.getPrimaryDisplay().workAreaSize;
+let pi;
+
+renderer.on('pi', (e, isPi) => { pi = isPi;});
+renderer.send('pi?');
 
 export let x = {};
 Object.defineProperties(x, {
@@ -13,19 +18,18 @@ Object.defineProperties(x, {
       decorateEl(document.body);
       document.body.setStyles({
         overflow: 'hidden',
-        height: `${size.height}px`,
-        width: `${size.width}px`,
+        height: pi ? `${size.height}px` : '480px',
+        width: pi ? `${size.width}px` : '800px',
         backgroundImage: 'url("./img/background/80s.jpg")',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
-	      cursor: 'none'
+	      cursor: pi ? 'none' : 'pointer'
       });
       
       let fragment = decorateEl(document.createDocumentFragment());
       
       [...args].forEach((arg) => {
-        
-        if(arg.constructor === Array){
+        if(arg && arg.constructor === Array){
           arg.forEach((elem) => {
             fragment.append(elem);
           });

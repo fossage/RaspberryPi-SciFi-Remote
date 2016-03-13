@@ -1,25 +1,27 @@
 import {x} from '../core/elements';
 import {getRandom} from '../utils/number-utils'
 
-function runAllDots(){
-  dotRunner(50, 355);
-  dotRunner(205, 375);
-  dotRunner(395, 420);
-  dotRunner(550, 410);
-  dotRunner(715, 428);
-}
+var paused = false;
 
 function runDot(xfrom, xto, time){
-  let dot1 = x.div.setStyles({
+  let dot = x.div.setStyles({
     border: '1px solid RGB(216, 254, 254)',
     borderRadius: '8px',
     backgroundColor: 'RGB(216, 254, 254)',
     boxShadow: '3px 3px 32px 3px RGB(216, 254, 254)',
     position: 'absolute'
+  })
+  .subscribe('openPane', function(){
+    this.animation.pause();
+    paused = true;
+  })
+  .subscribe('closePane', function(){
+    this.animation.play();
+    paused = false;
   });
   
-  document.body.appendChild(dot1);
-  dot1.fromTo(time, 
+  document.body.appendChild(dot);
+  dot.fromTo(time, 
   {
     y: 270, 
     x: xfrom,
@@ -34,18 +36,20 @@ function runDot(xfrom, xto, time){
     width: 1,  
     borderRadius: 6,
     onComplete: () => { 
-      dot1.setStyles({display: 'none'}); 
-      dot1.remove();
+      dot.setStyles({display: 'none'}); 
+      dot.remove();
     }
   });
 }
 
 function runAll(){
-  dotRunner(18, 357);
-  dotRunner(200, 374);
-  dotRunner(380, 390);
-  dotRunner(560, 408);
-  dotRunner(738, 425);
+  if(!paused){
+    dotRunner(18, 357);
+    dotRunner(200, 374);
+    dotRunner(380, 390);
+    dotRunner(560, 408);
+    dotRunner(738, 425);
+  }
 }
 
 function dotRunner(xfrom, xto) {
