@@ -6,14 +6,15 @@ export let plexControls = plexControlFactory();
 
 function plexControlFactory() {
   let buttonStyles = {
-    width: '100px',
-    height: '100px',
+    width: '70px',
+    height: '70px',
     borderRadius: '50px',
-    textShadow: '3px 2px 3px rgba(246,30,214,1)',
+    textShadow: '3px 4px 4px RGBA(20, 12, 200, 1)',
+    boxShadow: '3px 3px 62px 1px RGBA(0, 252, 250, 0.5)',
     color: 'rgba(246,30,214,1)',
     backgroundColor: '#111',
     position: 'absolute',
-    fontSize: '1.3em'
+    fontSize: '1.2em'
   }
 
   let topContent = x
@@ -22,56 +23,194 @@ function plexControlFactory() {
       display: 'flex'
     })
     .append(
+      
       x
       .button
-        .setStyles({
-          height: '50px',
-          width: '50px',
-          top: '10px',
-          left: '10px',
-          position: 'absolute',
-          borderRadius: '25px',
-          backgroundColor: '#333',
-          textShadow: '3px 2px 3px rgba(125,243,54,1)',
-          color: 'rgba(125,243,54,1)',
-          fontSize: '0.5em'
-        })
-        .text('CLOSE')
-        .touchStart(function(){
-          this.publish('closePane', {});
-        }),
+      .setStyles({
+        height: '50px',
+        width: '50px',
+        top: '10px',
+        left: '10px',
+        position: 'absolute',
+        borderRadius: '25px',
+        backgroundColor: '#333',
+        textShadow: '3px 2px 3px rgba(125,243,54,1)',
+        boxShadow: '3px 3px 32px 1px RGBA(0, 252, 250, 0.8)',
+        color: 'rgba(125,243,54,1)',
+        fontSize: '1.2em'
+      })
+      .text('吴')
+      .touchStart(function(){
+        this.publish('closePane', {});
+      }),
+      
       x
       .button
-        .setStyles(buttonStyles)
-        .setStyles({left: '50px', top: '100px'})
-        .text('LEFT')
-        .touchStart(() => {
-          sendCommand('navigation', 'moveLeft');
-        }),
+      .setStyles(buttonStyles)
+      .setStyles({
+        left: '450px', 
+        top: '30px',
+        color: 'RGB(0, 252, 250)',
+        width: '70px',
+        height: '70px',
+        fontSize: '0.95em',
+        textShadow: '3px 2px 3px rgba(12, 143, 224,1)',
+      })
+      .text('頁')
+      .touchStart(() => {
+        sendCommand('navigation', 'back');
+      }),
+      
       x
       .button
-        .setStyles(buttonStyles)
-        .setStyles({left: '250px', top: '50px'})
-        .text('DOWN')
-        .touchStart(() => {
-          sendCommand('navigation', 'moveDown');
-        }),
+      .setStyles(buttonStyles)
+      .setStyles({
+        left: '280px', 
+        top: '30px',
+        color: 'RGB(0, 252, 250)',
+        width: '70px',
+        height: '70px',
+        fontSize: '0.95em',
+        textShadow: '3px 2px 3px rgba(12, 143, 224,1)',
+      })
+      .text('ই')
+      .touchStart(() => {
+        sendCommand('navigation', 'back');
+      }),
+      
       x
       .button
-        .setStyles(buttonStyles)
-        .setStyles({left: '450px', top: '50px'})
-        .text('UP')
-        .touchStart(() => {
-          sendCommand('navigation', 'moveUp');
-        }),
+      .setStyles(buttonStyles)
+      .setStyles({
+        left: '350px',
+        top: '100px',
+        width: '100px',
+        height: '100px',
+        display: 'block'
+      })
+      .text('䕧')
+      .touchStart(() => {
+        sendCommand('navigation', 'select');
+      }),
+      
       x
       .button
-        .setStyles(buttonStyles)
-        .setStyles({left: '650px', top: '100px'})
-        .text('RIGHT')
-        .touchStart(() => {
-          sendCommand('navigation', 'moveRight');
-        })
+      .setStyles(buttonStyles)
+      .setStyles({left: '270px', top: '115px'})
+      .text('<')
+      .touchStart(() => {
+        sendCommand('navigation', 'moveLeft');
+      }),
+      
+      x
+      .button
+      .setStyles(buttonStyles)
+      .setStyles({left: '365px', top: '210px'})
+      .text('v')
+      .touchStart(() => {
+        sendCommand('navigation', 'moveDown');
+      }),
+      
+      x
+      .button
+      .setStyles(buttonStyles)
+      .setStyles({left: '365px', top: '20px'})
+      .text('^')
+      .touchStart(() => {
+        sendCommand('navigation', 'moveUp');
+      }),
+
+      x
+      .button
+      .setStyles(buttonStyles)
+      .setStyles({left: '460px', top: '115px'})
+      .text('>')
+      .touchStart(() => {
+        sendCommand('navigation', 'moveRight');
+      }),
+      
+      x
+      .button
+      .setStyles(buttonStyles)
+      .setStyles({
+        left: '200px', 
+        color: 'RGB(196, 239, 50)',
+        height: '50px',
+        width: '50px',
+        top: '330px',
+        textShadow: '3px 4px 4px RGBA(20, 120, 70, 1)',
+        boxShadow: '3px 3px 32px 1px RGBA(0, 252, 250, 0.8)',
+      })
+      .text('<<<')
+      .touchStart(() => {
+        sendCommand('playback', 'bigStepBack')
+      }),
+      
+      x
+      .button
+      .setStyles(buttonStyles)
+      .setStyles({
+        left: '280px', 
+        color: 'RGB(196, 239, 50)',
+        height: '50px',
+        width: '50px',
+        top: '330px',
+        textShadow: '3px 4px 4px RGBA(20, 120, 70, 1)',
+        boxShadow: '3px 3px 32px 1px RGBA(0, 252, 250, 0.8)',
+      })
+      .text('<<')
+      .touchStart(() => {
+        sendCommand('playback', 'stepBack')
+      }),
+      
+      x
+      .button
+      .setStyles(buttonStyles)
+      .setStyles({
+        left: '365px', 
+        top: '320px',
+        color: 'RGB(196, 239, 50)',
+        textShadow: '3px 4px 4px RGBA(20, 120, 70, 1)',
+        boxShadow: '3px 3px 32px 1px RGBA(0, 252, 250, 0.8)',
+      })
+      .text('蝧')
+      .touchStart(() => {
+        sendCommand('playback', 'play')
+      }),
+      
+      x
+      .button
+      .setStyles(buttonStyles)
+      .setStyles({
+        left: '470px', 
+        color: 'RGB(196, 239, 50)',
+        height: '50px',
+        width: '50px',
+        top: '330px',
+        textShadow: '3px 4px 4px RGBA(20, 120, 70, 1)',
+        boxShadow: '3px 3px 32px 1px RGBA(0, 252, 250, 0.8)',
+      })
+      .text('>>')
+      .touchStart(() => {
+        sendCommand('playback', 'stepForward')
+      }),
+      
+      x
+      .button
+      .setStyles(buttonStyles)
+      .setStyles({
+        left: '550px', 
+        color: 'RGB(196, 239, 50)',
+        height: '50px',
+        width: '50px',
+        top: '330px',
+        textShadow: '3px 4px 4px RGBA(20, 120, 70, 1)',
+        boxShadow: '3px 3px 32px 1px RGBA(0, 252, 250, 0.8)',
+      })
+      .text('>>>')
+      .touchStart(() => {
+        sendCommand('playback', 'bigStepForward')
+      })
     )
     
   let bottomContent = x
@@ -80,35 +219,7 @@ function plexControlFactory() {
       display: 'flex'
     })
     .append(
-      x
-      .button
-        .setStyles(buttonStyles)
-        .setStyles({left: '160px', top: '10px'})
-        .text('BACK')
-        .touchStart(() => {
-          sendCommand('navigation', 'back');
-        }),
-      x
-      .button
-        .setStyles(buttonStyles)
-        .setStyles({
-          left: '325px', 
-          top: '-75px',
-          width: '150px',
-          height: '150px'
-        })
-        .text('SELECT')
-        .touchStart(() => {
-          sendCommand('navigation', 'select');
-        }),
-      x
-      .button
-        .setStyles(buttonStyles)
-        .setStyles({left: '550px', top: '10px'})
-        .text('PLAY')
-        .touchStart(() => {
-          sendCommand('playback', 'play')
-        })
+      
     )
 
   let control = FullPane({
@@ -125,18 +236,18 @@ function plexControlFactory() {
   return control;
 }
 
-// moveUp
-// moveLeft
-// moveRight
-// moveDown
-// contextMenu
+// navigation/moveUp
+// navigation/moveLeft
+// navigation/moveRight
+// navigation/moveDown
+// navigation/contextMenu
 // select
 // back
-// setVolume?level=50
-// bigStepBack
-// stepBack
-// stepForward
-// bigStepForward
-// toggleOSD
-// play
-// stop
+// playback/setParameters?volume=50
+// playback/bigStepBack
+// playback/stepBack
+// playback/stepForward
+// playback/bigStepForward
+// playback/play
+// navigation/toggleOSD
+// navigation/stop

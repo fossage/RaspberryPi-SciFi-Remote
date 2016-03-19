@@ -109,15 +109,26 @@ export let decorateEl = (function() {
       update: {
         value: (options) => {
           let comp = el.$constructor(options);
-          el.parentNode.replaceChild(comp, el);
-          return el;
+          try{
+            el.parentNode.replaceChild(comp, el);
+            return el;
+          } catch(e){
+            console.warn('Cant update element because no parent was found');
+            return el;
+          }
         }
       },
       
       remove: {
         value: () => {
-          let parent = el.parentNode || document.body;
-          return parent.removeChild(el);
+          let parent = el.parentNode;
+          try {
+            return parent.removeChild(el);
+          } catch(e) {
+            console.error(e);
+            console.warn('Cant remove element because no parent was found');
+            return el;
+          }
         }
       },
       

@@ -3,7 +3,7 @@
 import {decorateEl, createEl} from './dum';
 const electron = require('electron');
 const renderer = require('electron').ipcRenderer; 
-
+//cool
 let size = electron.screen.getPrimaryDisplay().workAreaSize;
 let pi;
 
@@ -20,6 +20,7 @@ Object.defineProperties(x, {
         overflow: 'hidden',
         height: pi ? `${size.height}px` : '480px',
         width: pi ? `${size.width}px` : '800px',
+        margin: '0',
         backgroundImage: 'url("./img/background/80s.jpg")',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',

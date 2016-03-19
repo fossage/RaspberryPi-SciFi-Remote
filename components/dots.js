@@ -30,7 +30,7 @@ function runDot(xfrom, xto, time){
     borderRadius: 12
   }, 
   {
-    y: 18,
+    y: 25,
     x: xto, 
     height: 1, 
     width: 1,  
@@ -44,11 +44,11 @@ function runDot(xfrom, xto, time){
 
 function runAll(){
   if(!paused){
-    dotRunner(18, 357);
-    dotRunner(200, 374);
-    dotRunner(380, 390);
-    dotRunner(560, 408);
-    dotRunner(738, 425);
+    dotRunner(35, 366);
+    dotRunner(214, 382);
+    dotRunner(388, 398);
+    dotRunner(565, 414);
+    dotRunner(741, 430);
   }
 }
 

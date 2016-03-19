@@ -10,24 +10,44 @@ export let FullPane = Component((opts) => {
   
   let styles = Object.assign(defaultFactory(), opts);
   
-  let topStyles = Object.assign(defaultFactory(), { top: '-240px', position: 'absolute' });
-  let bottomStyles = Object.assign(defaultFactory(), { top: '535px', position: 'absolute' });
+  let topStyles = Object.assign(defaultFactory(), { 
+    top: '0px', 
+    position: 'absolute',
+    height: '480px',
+    color: '#fff',
+    textShadow: '2px 1px 2px rgba(150, 150, 150, 1)',
+    backgroundColor: '#000',
+    width: '800px',
+    left: '0',
+    margin: '0',
+    backgroundImage: 'url("./img/background/plex-background.jpeg")',
+    backgroundPosition: '-36px',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    opacity: '0' 
+  });
   
   let wrapper = x
     .div
+    .setStyles({ 
+      position: 'absolute', 
+      display: 'none', 
+      zIndex: '100',
+      top: '0'
+    })
+    .subscribe('openPlexRemote', function(){
+      this.setStyles({display: 'block'})
+      this.to(1, { opacity: 1})
+    })
+    .subscribe('closePane', function(){
+      this.animation.reverse();
+      this.setStyles({display: 'none'})
+    })
     .append(
       x.div
       .setStyles(topStyles)
       .subscribe('openPlexRemote', function(){
-        this.to(2, { y: 240})
-      })
-      .subscribe('closePane', function(){
-        this.animation.reverse();
-      }),
-      x.div
-      .setStyles(bottomStyles)
-      .subscribe('openPlexRemote', function(){
-        this.to(2, { y: -295 })
+        this.to(1, { opacity: 1})
       })
       .subscribe('closePane', function(){
         this.animation.reverse();
@@ -37,21 +57,10 @@ export let FullPane = Component((opts) => {
     if(opts.topContent) {
       wrapper.childNodes[0].append(opts.topContent);
     }
-    
-    if(opts.bottomContent) {
-      wrapper.childNodes[1].append(opts.bottomContent);
-    }
-    
+  
     function defaultFactory (){
       return { 
-        color: '#fff',
-        textShadow: '2px 1px 2px rgba(150, 150, 150, 1)',
-        backgroundColor: '#000',
-        height: '240px',
-        width: '800px',
-        left: '0',
-        zIndex: '10',
-        margin: '0'
+        
       }
     }
 
