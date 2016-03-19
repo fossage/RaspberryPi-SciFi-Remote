@@ -3,6 +3,7 @@ import {x} from '../core/elements';
 
 export let plexControls = plexControlFactory();
 
+let _volume = 50;
 
 function plexControlFactory() {
   let buttonStyles = {
@@ -48,11 +49,28 @@ function plexControlFactory() {
       .button
       .setStyles(buttonStyles)
       .setStyles({
-        left: '450px', 
-        top: '30px',
+        left: '270px', 
+        top: '20px',
         color: 'RGB(0, 252, 250)',
-        width: '70px',
-        height: '70px',
+        width: '50px',
+        height: '50px',
+        fontSize: '0.95em',
+        textShadow: '3px 2px 3px rgba(12, 143, 224,1)',
+      })
+      .text('ই')
+      .touchStart(() => {
+        sendCommand('navigation', 'toggleOSD');
+      }),
+      
+      x
+      .button
+      .setStyles(buttonStyles)
+      .setStyles({
+        left: '480px', 
+        top: '20px',
+        color: 'RGB(0, 252, 250)',
+        width: '50px',
+        height: '50px',
         fontSize: '0.95em',
         textShadow: '3px 2px 3px rgba(12, 143, 224,1)',
       })
@@ -61,22 +79,6 @@ function plexControlFactory() {
         sendCommand('navigation', 'back');
       }),
       
-      x
-      .button
-      .setStyles(buttonStyles)
-      .setStyles({
-        left: '280px', 
-        top: '30px',
-        color: 'RGB(0, 252, 250)',
-        width: '70px',
-        height: '70px',
-        fontSize: '0.95em',
-        textShadow: '3px 2px 3px rgba(12, 143, 224,1)',
-      })
-      .text('ই')
-      .touchStart(() => {
-        sendCommand('navigation', 'back');
-      }),
       
       x
       .button
@@ -210,27 +212,62 @@ function plexControlFactory() {
       .text('>>>')
       .touchStart(() => {
         sendCommand('playback', 'bigStepForward')
+      }),
+      
+      x
+      .button
+      .setStyles(buttonStyles)
+      .setStyles({
+        left: '700px', 
+        color: 'RGB(196, 239, 50)',
+        height: '50px',
+        width: '50px',
+        top: '20px',
+        textShadow: '3px 4px 4px RGBA(20, 120, 70, 1)',
+        boxShadow: '3px 3px 32px 1px RGBA(0, 252, 250, 0.8)',
+      })
+      .text('+')
+      .touchStart(() => {
+        sendCommand('playback', `setParameters?volume=${_setVolume('up')}`)
+      }),
+      
+      x
+      .button
+      .setStyles(buttonStyles)
+      .setStyles({
+        left: '700px', 
+        color: 'RGB(196, 239, 50)',
+        height: '50px',
+        width: '50px',
+        top: '100px',
+        textShadow: '3px 4px 4px RGBA(20, 120, 70, 1)',
+        boxShadow: '3px 3px 32px 1px RGBA(0, 252, 250, 0.8)',
+      })
+      .text('-')
+      .touchStart(() => {
+        sendCommand('playback', `setParameters?volume=${_setVolume('down')}`)
       })
     )
-    
-  let bottomContent = x
-    .div
-    .setStyles({
-      display: 'flex'
-    })
-    .append(
-      
-    )
+
 
   let control = FullPane({
     color: 'RGB(255, 21, 30)', 
     padding: '15px',
-    topContent: topContent,
-    bottomContent: bottomContent
+    topContent: topContent
   });
   
   function sendCommand(type, cmd) {
     fetch(`http://192.168.0.3:32400/system/players/192.168.0.18/${type}/${cmd}`);
+  }
+  
+  function _setVolume(direction) {
+    if(direction === 'up' && _volume < 100) {
+     return _volume += 5;
+    } else if(direction === 'down' && _volume > 0) {
+      return _volume -= 5;
+    } else {
+      return _volume;
+    }
   }
 
   return control;

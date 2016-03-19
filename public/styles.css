@@ -11,6 +11,7 @@
 * {
   font-family: tron;
   -webkit-user-select: none;
+  /*cursor: none;*/
 }
 
 .blade {
