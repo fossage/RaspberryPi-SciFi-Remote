@@ -224,6 +224,13 @@ export let decorateEl = (function() {
         }
       },
       
+      attachFunction: {
+        value: (cb) => {
+          cb.call(el, el);
+          return el;
+        }
+      },
+      
       shadow: {
         value: function(templateId) {
           let link     = document.querySelector('link[rel="import"]' + templateId + '-comp');

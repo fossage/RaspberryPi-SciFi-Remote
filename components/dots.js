@@ -36,7 +36,6 @@ function runDot(xfrom, xto, time){
     width: 1,  
     borderRadius: 6,
     onComplete: () => { 
-      dot.setStyles({display: 'none'}); 
       dot.remove();
     }
   });
