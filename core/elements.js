@@ -1,6 +1,9 @@
 'use strict';
 
 import {decorateEl, createEl} from './dum';
+import {partialApplyObjStr} from '../utils/curry-functions';
+import {traverseNodes, callNodesEventCallbacks} from './element-utils'
+
 const electron = require('electron');
 const renderer = require('electron').ipcRenderer; 
 //cool
@@ -45,9 +48,12 @@ Object.defineProperties(x, {
         if(arg && arg.constructor === Array){
           arg.forEach((elem) => {
             var current = elem;
+            traverseNodes(elem, partialApplyObjStr(callNodesEventCallbacks, 'didMount'));
+            elem.$$mounted = true;
           });
         } else {
-          traverseNodes(arg);
+          traverseNodes(arg, partialApplyObjStr(callNodesEventCallbacks, 'didMount'));
+          arg.$$mounted = true;
         }
       });
       
@@ -536,17 +542,4 @@ Object.defineProperties(x, {
   }
 });
 
-export function traverseNodes(node, eventType) {
-  if(node.$$eventCallbacks && node.$$eventCallbacks['didMount']) {
-    node.$$eventCallbacks['didMount'].forEach((cb) => {
-      cb()
-    });
-  }
-  
-  if(node.childNodes.length) {
-    Object.keys(node.childNodes).forEach((key) => {
-      traverseNodes(node.childNodes[key]);
-    });
-  }
-}
 

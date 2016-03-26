@@ -1,6 +1,8 @@
 'use strict';
 
-import {traverseNodes} from './elements'; 
+import {partialApplyObjStr} from '../utils/curry-functions';
+import {traverseNodes, callNodesEventCallbacks} from './element-utils'
+
 let TweenMax = require('gsap');
 const renderer = require('electron').ipcRenderer;
 
@@ -65,6 +67,14 @@ export let decorateEl = (function() {
         }())
       },
       
+      $$mounted: {
+        value: false,
+        enumerable: false,
+        writable: true,
+        readable: true,
+        configurable: true
+      },
+      
       $$eventCallbacks: {
         value: {},
         enumerable: false,
@@ -127,13 +137,18 @@ export let decorateEl = (function() {
           [...args].forEach((childEl) => {
             if(childEl && childEl.constructor === Array){
               childEl.forEach((elem) => {
-                traverseNodes(elem);
-                fragment.appendChild(elem, 'willMount');
+                if(!elem.$$mounted){
+                  traverseNodes(elem, partialApplyObjStr(callNodesEventCallbacks, 'willMount'));
+                  fragment.appendChild(elem);
+                }
               });
               
               el.appendChild(fragment);
             } else if(childEl){
-              traverseNodes(childEl, 'willMount');
+              if(!childEl.$$mounted){
+                traverseNodes(childEl, partialApplyObjStr(callNodesEventCallbacks, 'willMount'));
+              }
+
               el.appendChild(childEl);
             }
           });
