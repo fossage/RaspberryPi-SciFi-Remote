@@ -1,7 +1,9 @@
 'use strict';
 
+import {traverseNodes} from './elements'; 
 let TweenMax = require('gsap');
-const renderer = require('electron').ipcRenderer; 
+const renderer = require('electron').ipcRenderer;
+
 
 let pi;
 renderer.on('pi', (isPi) => { pi = isPi; });
@@ -34,6 +36,8 @@ export function createEl(elName) {
 
 export let decorateEl = (function() {
   let uid = 0;
+  let mounted = false;
+  
   return (el) => {
     Object.defineProperties(el, {
       $uid: {
@@ -61,6 +65,14 @@ export let decorateEl = (function() {
         }())
       },
       
+      $$eventCallbacks: {
+        value: {},
+        enumerable: false,
+        writable: true,
+        readable: true,
+        configurable: true
+      },
+      
       click: {
         value: _setUpHandler('click', el)
       },
@@ -85,6 +97,29 @@ export let decorateEl = (function() {
         value: _setUpHandler('mouseUp', el)
       },
       
+      on: {
+        value: (eventName, cb) => {
+          let cbs;
+          if(cb.constructor === Array) {
+            cb.forEach((cb) => { cb.bind(el, el); });
+            cbs = cb 
+          } else if(typeof cb === 'function') {
+            cb.bind(el, el);
+            cbs = [cb];
+          } else {
+            throw new TypeError('Argument must be a function or array of functions');
+          }
+          
+          if(el.$$eventCallbacks[eventName]) {
+            el.$$eventCallbacks[eventName] = el.$$eventCallbacks[eventName].concat(cbs);
+          } else {
+            el.$$eventCallbacks[eventName] = cbs;
+          }
+          
+          return el;
+        }
+      },
+      
       append: {
         value: (...args) => {
           let fragment = document.createDocumentFragment();
@@ -92,12 +127,13 @@ export let decorateEl = (function() {
           [...args].forEach((childEl) => {
             if(childEl && childEl.constructor === Array){
               childEl.forEach((elem) => {
-                fragment.appendChild(elem);
+                traverseNodes(elem);
+                fragment.appendChild(elem, 'willMount');
               });
               
               el.appendChild(fragment);
             } else if(childEl){
-
+              traverseNodes(childEl, 'willMount');
               el.appendChild(childEl);
             }
           });

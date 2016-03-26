@@ -41,6 +41,16 @@ Object.defineProperties(x, {
       
       document.body.appendChild(fragment);
       
+      [...args].forEach((arg) => {
+        if(arg && arg.constructor === Array){
+          arg.forEach((elem) => {
+            var current = elem;
+          });
+        } else {
+          traverseNodes(arg);
+        }
+      });
+      
       return args;
     }
   },
@@ -525,4 +535,18 @@ Object.defineProperties(x, {
     }
   }
 });
+
+export function traverseNodes(node, eventType) {
+  if(node.$$eventCallbacks && node.$$eventCallbacks['didMount']) {
+    node.$$eventCallbacks['didMount'].forEach((cb) => {
+      cb()
+    });
+  }
+  
+  if(node.childNodes.length) {
+    Object.keys(node.childNodes).forEach((key) => {
+      traverseNodes(node.childNodes[key]);
+    });
+  }
+}
 

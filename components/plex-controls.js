@@ -343,9 +343,9 @@ function plexControlFactory() {
   .subscribe('closePane', () => {
     paused = true;
   })
-  .attachFunction(() => {
-    runAll();
-  });
+  // .attachFunction(() => {
+  //   runAll();
+  // });
   
 
   return control;
