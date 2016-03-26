@@ -1,7 +1,7 @@
 'use strict';
 
 import {decorateEl, createEl} from './dum';
-import {partialApplyObjStr} from '../utils/curry-functions';
+import {curry} from '../utils/functional-utils';
 import {traverseNodes, callNodesEventCallbacks} from './element-utils'
 
 const electron = require('electron');
@@ -48,11 +48,11 @@ Object.defineProperties(x, {
         if(arg && arg.constructor === Array){
           arg.forEach((elem) => {
             var current = elem;
-            traverseNodes(elem, partialApplyObjStr(callNodesEventCallbacks, 'didMount'));
+            traverseNodes(elem, curry(callNodesEventCallbacks, 'didMount'));
             elem.$$mounted = true;
           });
         } else {
-          traverseNodes(arg, partialApplyObjStr(callNodesEventCallbacks, 'didMount'));
+          traverseNodes(arg, curry(callNodesEventCallbacks, 'didMount'));
           arg.$$mounted = true;
         }
       });

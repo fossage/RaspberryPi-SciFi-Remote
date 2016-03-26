@@ -1,6 +1,6 @@
 'use strict';
 
-import {partialApplyObjStr} from '../utils/curry-functions';
+import {curry} from '../utils/functional-utils';
 import {traverseNodes, callNodesEventCallbacks} from './element-utils'
 
 let TweenMax = require('gsap');
@@ -138,7 +138,7 @@ export let decorateEl = (function() {
             if(childEl && childEl.constructor === Array){
               childEl.forEach((elem) => {
                 if(!elem.$$mounted){
-                  traverseNodes(elem, partialApplyObjStr(callNodesEventCallbacks, 'willMount'));
+                  traverseNodes(elem, curry(callNodesEventCallbacks, 'willMount'));
                   fragment.appendChild(elem);
                 }
               });
@@ -146,7 +146,7 @@ export let decorateEl = (function() {
               el.appendChild(fragment);
             } else if(childEl){
               if(!childEl.$$mounted){
-                traverseNodes(childEl, partialApplyObjStr(callNodesEventCallbacks, 'willMount'));
+                traverseNodes(childEl, curry(callNodesEventCallbacks, 'willMount'));
               }
 
               el.appendChild(childEl);
