@@ -1,6 +1,6 @@
 'use strict'
 
-import {x} from '../core/elements';
+import {DOM} from '../core/elements';
 import {pxParser} from '../utils/string-utils';
 import {Component} from '../core/component-factory';
 
@@ -27,7 +27,7 @@ export let FullPane = Component((opts) => {
     opacity: '0' 
   });
   
-  let wrapper = x
+  let wrapper = DOM
     .div
     .setStyles({ 
       position: 'absolute', 
@@ -44,7 +44,7 @@ export let FullPane = Component((opts) => {
       this.setStyles({display: 'none'})
     })
     .append(
-      x.div
+      DOM.div
       .setStyles(topStyles)
       .subscribe('openPlexRemote', function(){
         this.to(1, { opacity: 1})

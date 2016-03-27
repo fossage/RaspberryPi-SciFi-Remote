@@ -1,5 +1,5 @@
 import {Pane} from '../component-templates/pane';
-import {x} from '../core/elements';
+import {DOM} from '../core/elements';
 
 export let weatherPane = Pane({color: 'RGB(255, 21, 30)', padding: '15px'});
 
@@ -18,9 +18,9 @@ weatherPane.subscribe('openWeather', () => {
 
 weatherPane.subscribe('weatherLoaded', (e, data) => {
   weatherPane.append(
-    x.h1.text('Current Weather').setClass('blade'), 
-    x.hr,
-    x.h1.text(`${data.main.temp}ºF`).setClass('blade'),
-    x.h3.text(data.weather[0].description).setClass('blade')
+    DOM.h1.text('Current Weather').setClass('blade'), 
+    DOM.hr,
+    DOM.h1.text(`${data.main.temp}ºF`).setClass('blade'),
+    DOM.h3.text(data.weather[0].description).setClass('blade')
   )
 });

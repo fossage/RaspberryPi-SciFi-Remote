@@ -1,6 +1,6 @@
 'use strict'
 
-import {x} from '../core/elements';
+import {DOM} from '../core/elements';
 import {pxParser} from '../utils/string-utils';
 import {Component} from '../core/component-factory';
 
@@ -32,7 +32,7 @@ export let Tile = Component((opts) => {
     color: '#666'
   };
 
-  let innerDiv = x
+  let innerDiv = DOM
     .div
       .setClass('tile-inner')
       .setStyles(styles)
@@ -45,7 +45,7 @@ export let Tile = Component((opts) => {
         this.publish('tileReleased', {});
       });
 
-  let title = x
+  let title = DOM
     .h1
       .text(opts.text || 'hi')
       .setStyles({
@@ -54,7 +54,7 @@ export let Tile = Component((opts) => {
         fontSize: opts.fontSize || '1.6em'
       });
 
-  return x.output(
+  return DOM.output(
     innerDiv.append(
       title
     )

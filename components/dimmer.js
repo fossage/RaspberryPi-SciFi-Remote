@@ -1,6 +1,6 @@
-import {x} from '../core/elements';
+import {DOM} from '../core/elements';
 
-export let dimmer = x.div.setStyles({
+export let dimmer = DOM.div.setStyles({
   height: '480px',
   width: '800px',
   position: 'absolute',

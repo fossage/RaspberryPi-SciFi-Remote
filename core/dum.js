@@ -332,7 +332,12 @@ function _setUpSingleAnimation(el, type) {
         writable: false,
         configurable: true
       });
-    } else if((el.animation && el.animation._reversed) || duration !== currentAnimation.duration || !Object.is(vars, currentAnimation.vars)) {
+   
+    // Ugly logic block ahead!!!
+    } else if((el.animation && el.animation._reversed) 
+      || duration !== currentAnimation.duration 
+      || !Object.is(vars, currentAnimation.vars)) {
+
       let timeLine = TweenMax[type](el, duration, vars);
       el.animation = timeLine; 
     }
@@ -345,6 +350,8 @@ function _setUpGroupAnimation(el) {
   let currentAnimation = {duration: null, fromVars: null, toVars: null};
   
   return (duration, fromVars, toVars) => {
+    
+    // Ugly logic block ahead!!!
     if(duration !== currentAnimation.duration 
       || !Object.is(fromVars, currentAnimation.fromVars) 
       || !Object.is(toVars, currentAnimation.toVars)) 

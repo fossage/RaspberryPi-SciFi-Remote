@@ -1,6 +1,6 @@
 'use strict';
 
-import {x} from '../core/elements';
+import {DOM} from '../core/elements';
 import {Component} from '../core/component-factory';
 let TweenMax = require('gsap');
 
@@ -23,9 +23,9 @@ export let OCM = Component((opts) => {
   
   let items = [];
   opts.items.forEach((item) => {
-    items.push(x.
+    items.push(DOM.
       li.append(
-        x.h1
+        DOM.h1
           .text(item)
       )
     );
@@ -51,7 +51,7 @@ export let OCM = Component((opts) => {
         items
       )
       .subscribe('openOCM', (el) => {
-        TweenMax.staggerFrom(items, 0.2, {x: -200}, 0.1);
+        TweenMaDOM.staggerFrom(items, 0.2, {x: -200}, 0.1);
       })
   );
       

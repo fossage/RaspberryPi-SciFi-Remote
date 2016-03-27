@@ -1,4 +1,4 @@
-import {x} from '../core/elements';
+import {DOM} from '../core/elements';
 import {dots} from '../components/dots';
 import {dimmer} from '../components/dimmer';
 import {weatherPane} from '../components/weather-pane';
@@ -9,7 +9,7 @@ import {plexControls} from '../components/plex-controls';
 dots();
 
 /*======== LINKAGE =======*/
-x.attach(
+DOM.attach(
   dimmer,
   weatherPane,
   mainControlTiles,

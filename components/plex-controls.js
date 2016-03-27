@@ -1,5 +1,5 @@
 import {FullPane} from '../component-templates/full-pane';
-import {x} from '../core/elements';
+import {DOM} from '../core/elements';
 import {getRandom} from '../utils/number-utils';
 
 export let plexControls = plexControlFactory();
@@ -21,7 +21,7 @@ function plexControlFactory() {
     zIndex: '10'
   }
 
-  let topContent = x
+  let topContent = DOM
     .div
     .setStyles({
       position: 'relative',
@@ -29,7 +29,7 @@ function plexControlFactory() {
       backgroundColor: 'rgba(250, 250, 250, 0)'
     })
     .append(
-      x
+      DOM
       .button
       .setStyles({
         height: '50px',
@@ -49,7 +49,7 @@ function plexControlFactory() {
         this.publish('closePane', {});
       }),
       
-      x
+      DOM
       .button
       .setStyles(buttonStyles)
       .setStyles({
@@ -66,7 +66,7 @@ function plexControlFactory() {
         sendCommand('navigation', 'back');
       }),
       
-      x
+      DOM
       .button
       .setStyles(buttonStyles)
       .setStyles({
@@ -84,7 +84,7 @@ function plexControlFactory() {
       }),
       
       
-      x
+      DOM
       .button
       .setStyles(buttonStyles)
       .setStyles({
@@ -99,7 +99,7 @@ function plexControlFactory() {
         sendCommand('navigation', 'select');
       }),
       
-      x
+      DOM
       .button
       .setStyles(buttonStyles)
       .setStyles({left: '270px', top: '115px'})
@@ -108,7 +108,7 @@ function plexControlFactory() {
         sendCommand('navigation', 'moveLeft');
       }),
       
-      x
+      DOM
       .button
       .setStyles(buttonStyles)
       .setStyles({left: '365px', top: '210px'})
@@ -117,7 +117,7 @@ function plexControlFactory() {
         sendCommand('navigation', 'moveDown');
       }),
       
-      x
+      DOM
       .button
       .setStyles(buttonStyles)
       .setStyles({left: '365px', top: '20px'})
@@ -126,7 +126,7 @@ function plexControlFactory() {
         sendCommand('navigation', 'moveUp');
       }),
 
-      x
+      DOM
       .button
       .setStyles(buttonStyles)
       .setStyles({left: '460px', top: '115px'})
@@ -135,7 +135,7 @@ function plexControlFactory() {
         sendCommand('navigation', 'moveRight');
       }),
       
-      x
+      DOM
       .button
       .setStyles(buttonStyles)
       .setStyles({
@@ -152,7 +152,7 @@ function plexControlFactory() {
         sendCommand('playback', 'bigStepBack')
       }),
       
-      x
+      DOM
       .button
       .setStyles(buttonStyles)
       .setStyles({
@@ -169,7 +169,7 @@ function plexControlFactory() {
         sendCommand('playback', 'stepBack')
       }),
       
-      x
+      DOM
       .button
       .setStyles(buttonStyles)
       .setStyles({
@@ -184,7 +184,7 @@ function plexControlFactory() {
         sendCommand('playback', 'play')
       }),
       
-      x
+      DOM
       .button
       .setStyles(buttonStyles)
       .setStyles({
@@ -201,7 +201,7 @@ function plexControlFactory() {
         sendCommand('playback', 'stepForward')
       }),
       
-      x
+      DOM
       .button
       .setStyles(buttonStyles)
       .setStyles({
@@ -218,7 +218,7 @@ function plexControlFactory() {
         sendCommand('playback', 'bigStepForward')
       }),
       
-      x
+      DOM
       .button
       .setStyles(buttonStyles)
       .setStyles({
@@ -235,7 +235,7 @@ function plexControlFactory() {
         sendCommand('playback', `setParameters?volume=${_setVolume('up')}`)
       }),
       
-      x
+      DOM
       .button
       .setStyles(buttonStyles)
       .setStyles({
@@ -258,7 +258,7 @@ function plexControlFactory() {
     var clear = setTimeout(() => {
       let color = 'RGB(0, 194, 253)';
       let time = getRandom(5, 16);
-      let dot = x.div.setStyles({
+      let dot = DOM.div.setStyles({
         border: `1px solid ${color}`,
         borderRadius: '8px',
         backgroundColor: color,

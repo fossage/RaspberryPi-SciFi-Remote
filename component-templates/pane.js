@@ -1,6 +1,6 @@
 'use strict'
 
-import {x} from '../core/elements';
+import {DOM} from '../core/elements';
 import {pxParser} from '../utils/string-utils';
 import {Component} from '../core/component-factory';
 
@@ -21,7 +21,7 @@ export let Pane = Component((opts) => {
     top: '-235px'
   }, opts);
   
-  let wrapper = x
+  let wrapper = DOM
     .div
     .setStyles(styles)
     .touchStart((el) => {
@@ -29,7 +29,7 @@ export let Pane = Component((opts) => {
       el.publish('closePane', {});
     });
     
-  let heading = x.h1;
+  let heading = DOM.h1;
   
   wrapper.append(heading);
   

@@ -1,10 +1,10 @@
-import {x} from '../core/elements';
+import {DOM} from '../core/elements';
 import {getRandom} from '../utils/number-utils'
 
 var paused = false;
 
 function runDot(xfrom, xto, time){
-  let dot = x.div.setStyles({
+  let dot = DOM.div.setStyles({
     border: '1px solid RGB(216, 254, 254)',
     borderRadius: '8px',
     backgroundColor: 'RGB(216, 254, 254)',

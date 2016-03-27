@@ -13,8 +13,8 @@ let pi;
 renderer.on('pi', (e, isPi) => { pi = isPi;});
 renderer.send('pi?');
 
-export let x = {};
-Object.defineProperties(x, {
+export let DOM = {};
+Object.defineProperties(DOM, {
   attach: {
     value: (...args) => {
       

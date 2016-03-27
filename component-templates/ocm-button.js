@@ -1,10 +1,10 @@
-import {x} from '../core/elements';
+import {DOM} from '../core/elements';
 import {Component} from '../core/component-factory';
 
 export let OCMButton = Component((opts) => {
  
  
-  let container = x.div
+  let container = DOM.div
   
   let button = x
     .img
@@ -14,7 +14,7 @@ export let OCMButton = Component((opts) => {
     })
     .setStyles(opts);
   
-  return x.output(
+  return DOM.output(
     container.append(
       button
     )

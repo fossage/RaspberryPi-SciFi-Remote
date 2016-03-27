@@ -1,4 +1,4 @@
-import {x} from '../core/elements';
+import {DOM} from '../core/elements';
 import {Tile} from '../component-templates/tile';
 let renderer = require('electron').ipcRenderer;
 
@@ -57,7 +57,7 @@ function tiles(){
     });
   })
 
-  mainControlTiles = x
+  mainControlTiles = DOM
     .div
     .append(tileFragment)
     .setStyles({
