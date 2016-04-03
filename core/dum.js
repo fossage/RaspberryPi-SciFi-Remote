@@ -47,6 +47,22 @@ export let decorateEl = (function() {
         value: ++uid
       },
       
+      $$mounted: {
+        value: false,
+        enumerable: false,
+        writable: true,
+        readable: true,
+        configurable: true
+      },
+      
+      $$eventCallbacks: {
+        value: {},
+        enumerable: false,
+        writable: true,
+        readable: true,
+        configurable: true
+      },
+      
       touchStart: {
         value: (function(){
           if(pi) {
@@ -67,21 +83,6 @@ export let decorateEl = (function() {
         }())
       },
       
-      $$mounted: {
-        value: false,
-        enumerable: false,
-        writable: true,
-        readable: true,
-        configurable: true
-      },
-      
-      $$eventCallbacks: {
-        value: {},
-        enumerable: false,
-        writable: true,
-        readable: true,
-        configurable: true
-      },
       
       click: {
         value: _setUpHandler('click', el)
@@ -334,7 +335,8 @@ function _setUpSingleAnimation(el, type) {
       });
    
     // Ugly logic block ahead!!!
-    } else if((el.animation && el.animation._reversed) 
+    } else if(
+      (el.animation && el.animation._reversed) 
       || duration !== currentAnimation.duration 
       || !Object.is(vars, currentAnimation.vars)) {
 

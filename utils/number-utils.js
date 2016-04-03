@@ -1,5 +1,5 @@
 'use strict';
 
-export let getRandom = function (max, min){
+export function getRandom(max, min){
   return Math.floor(Math.random() * (1 + max - min) + min);
 }

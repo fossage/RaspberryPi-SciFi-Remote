@@ -251,72 +251,7 @@ function plexControlFactory() {
       .touchStart(() => {
         sendCommand('playback', `setParameters?volume=${_setVolume('down')}`)
       })
-    )
-  
-  function runDot(xfrom, xto, yfrom, yto, sizefrom = 15, sizeto = 15, brfrom = '12px', brto = '12px'){
-    let num = getRandom(1000, 10000);
-    var clear = setTimeout(() => {
-      let color = 'RGB(0, 194, 253)';
-      let time = getRandom(5, 16);
-      let dot = DOM.div.setStyles({
-        border: `1px solid ${color}`,
-        borderRadius: '8px',
-        backgroundColor: color,
-        boxShadow: `3px 3px 32px 3px ${color}`,
-        position: 'absolute',
-        zIndex: '0'
-      })
-      .subscribe('closePane', function(){
-        this.animation.pause();
-      })
-      .subscribe('openPlexRemote', function(){
-        this.animation.play();
-      });
-
-      dot.fromTo(time, 
-      {
-        y: yfrom, 
-        x: xfrom,
-        height: sizefrom, 
-        width: sizefrom, 
-        borderRadius: brfrom
-      }, 
-      {
-        y: yto,
-        x: xto,
-        height: sizeto, 
-        width: sizeto, 
-        borderRadius: brto, 
-        onComplete: () => { 
-          dot.remove();
-        }
-      });
-      
-      topContent.append(dot);
-      clearTimeout(clear);
-    }, num);
-  }
-
-  function runAll(){
-    let num = getRandom(6000, 15000);
-    _defaultDots();
-    setInterval(() => {
-      if(!paused){
-        num = getRandom(6000, 15000);
-        _defaultDots();
-      }
-    }, num);
-  }
-  
-  function _defaultDots() {
-    runDot(855, -150, 265, 265, 2, 2);
-    runDot(-150, 855, 285, 285, 5, 5);
-    runDot(-150, 855, 323, 323, 10, 10);
-    runDot(855, -150, 410, 410);
-    runDot(150, 383, 450, '200px', 25, 1);
-    runDot(623, 414, 450, '200px', 25, 1);
-  }
-  
+    )  
 
   function sendCommand(type, cmd) {
     fetch(`http://192.168.0.3:32400/system/players/192.168.0.18/${type}/${cmd}`);
@@ -343,26 +278,6 @@ function plexControlFactory() {
   .subscribe('closePane', () => {
     paused = true;
   })
-  // .attachFunction(() => {
-  //   runAll();
-  // });
-  
 
   return control;
 }
-
-// navigation/moveUp
-// navigation/moveLeft
-// navigation/moveRight
-// navigation/moveDown
-// navigation/contextMenu
-// select
-// back
-// playback/setParameters?volume=50
-// playback/bigStepBack
-// playback/stepBack
-// playback/stepForward
-// playback/bigStepForward
-// playback/play
-// navigation/toggleOSD
-// navigation/stop
