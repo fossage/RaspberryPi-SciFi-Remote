@@ -30,6 +30,10 @@ function createWindow () {
     type: 'splash',
     backgroundColor: '#BDF4DE'
   });
+  
+  ipcMain.on('pi?', (event) => {
+    event.sender.send('pi', pi);
+  });
 
   if(pi) {
     var gpio = require('rpi-gpio');

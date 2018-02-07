@@ -1,6 +1,11 @@
 'use strict';
 
 let TweenMax = require('gsap');
+const renderer = require('electron').ipcRenderer; 
+
+let pi;
+renderer.on('pi', (isPi) => { pi = isPi; });
+renderer.send('pi?');
 
 export function registerComponent(elementName, templateId, shadowHost) {
   let CustomElement   = document.registerElement(elementName);
@@ -37,11 +42,23 @@ export let decorateEl = (function() {
       },
       
       touchStart: {
-        value: _setUpHandler('touchstart', el)
+        value: (function(){
+          if(pi) {
+            return _setUpHandler('touchstart', el);
+          } else {
+            return _setUpHandler('click', el);
+          }
+        }())
       },
 
       touchEnd: {
-        value: _setUpHandler('touchend', el)
+        value: (function(){
+          if(pi) {
+            return _setUpHandler('touchend', el);
+          } else {
+            return _setUpHandler('click', el);
+          }
+        }())
       },
       
       click: {
@@ -75,13 +92,14 @@ export let decorateEl = (function() {
           let fragment = document.createDocumentFragment();
           
           [...args].forEach((childEl) => {
-            if(childEl.constructor === Array){
+            if(childEl && childEl.constructor === Array){
               childEl.forEach((elem) => {
                 fragment.appendChild(elem);
               });
               
               el.appendChild(fragment);
-            } else {
+            } else if(childEl){
+
               el.appendChild(childEl);
             }
           });
